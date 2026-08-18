@@ -1,4 +1,4 @@
-mAWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: "2010-09-09"
 Description: >
   Pickleball app - Infra stack (VPC, ALB, ECS cluster, ECR, S3, CloudFront,
   RDS PostgreSQL, Secrets Manager, IAM/OIDC). Run this manually via the
@@ -334,8 +334,9 @@ Resources:
             Principal: {Federated: !Ref GitHubOIDCProvider}
             Action: sts:AssumeRoleWithWebIdentity
             Condition:
-              StringEquals: {"token.actions.githubusercontent.com:aud": "sts.amazonaws.com"}
-              StringLike: {"token.actions.githubusercontent.com:sub": !Sub "repo:${GitHubRepo}:*"}
+              StringEquals: 
+                "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                "token.actions.githubusercontent.com:job_workflow_ref": !Sub "${GitHubRepo}/.github/workflows/deploy.yml@*"
       Policies:
         - PolicyName: CIDeployPermissions
           PolicyDocument:

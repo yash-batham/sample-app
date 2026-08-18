@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pickleball Championship 2026 — Live Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body class="pb-28">
+
+<!-- ============ PUBLIC TOP NAV ============ -->
+<header class="pb-nav">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="pb-nav__brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+        </span>
+        <span class="leading-tight">
+          <span class="block font-display font-bold text-base text-slate-800">Summer Smash</span>
+          <span class="block text-[0.65rem] font-semibold text-slate-400 uppercase tracking-wider">Championship 2026</span>
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7">
+        <a href="index.html" class="pb-nav__link is-active">Dashboard</a>
+        <a href="standings.html" class="pb-nav__link">Standings</a>
+        <a href="matches.html" class="pb-nav__link">Matches</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-3">
+        <span class="live-pill"><span class="live-pill__dot"></span> 2 LIVE NOW</span>
+        <a href="admin-login.html" class="btn btn-outline btn-sm">Admin Login</a>
+      </div>
+
+      <button class="md:hidden p-2 -mr-2 text-slate-600" onclick="document.getElementById('mobileNav').classList.toggle('is-open')" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileNav" class="pb-nav__mobile-panel md:hidden">
+    <div class="px-4 py-3 flex flex-col gap-1">
+      <a href="index.html" class="pb-nav__link is-active !py-2">Dashboard</a>
+      <a href="standings.html" class="pb-nav__link !py-2">Standings</a>
+      <a href="matches.html" class="pb-nav__link !py-2">Matches</a>
+      <a href="admin-login.html" class="pb-nav__link !py-2">Admin Login</a>
+      <span class="live-pill mt-2 w-fit"><span class="live-pill__dot"></span> 2 LIVE NOW</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="text-white" style="background: linear-gradient(120deg, var(--pb-blue-900), var(--pb-blue-700) 55%, var(--pb-teal-700));">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+    <div>
+      <p class="text-teal-200 font-bold text-xs uppercase tracking-widest mb-1">Day 2 of 3 &middot; Riverside Pickleball Complex, Austin TX</p>
+      <h1 class="font-display font-bold text-3xl sm:text-4xl">PickleBall</h1>
+      <p class="text-white/70 text-sm mt-1">Aug 21&ndash;23, 2026 &middot; Doubles</p>
+    </div>
+    <div class="flex gap-3">
+      <div class="stat-tile !bg-white/10 !border-white/15 backdrop-blur-sm">
+        <div class="stat-tile__value !text-white">6</div>
+        <div class="stat-tile__label !text-teal-200">Live Courts</div>
+      </div>
+      <div class="stat-tile !bg-white/10 !border-white/15 backdrop-blur-sm">
+        <div class="stat-tile__value !text-white">48</div>
+        <div class="stat-tile__label !text-teal-200">Teams</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
+
+  <!-- ============ COURT STATUS GRID ============ -->
+  <section>
+    <div class="section-heading">
+      <h2 class="font-display font-bold text-xl text-slate-800">Court Status</h2>
+      <span class="text-xs text-slate-400 font-semibold">Updated 2 min ago</span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+
+      <div class="court-card is-live">
+        <div class="flex items-center justify-between mb-2">
+          <span class="court-card__num">Court 1</span>
+          <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+        </div>
+        <p class="text-xs font-semibold text-slate-600">Alpha Smashers</p>
+        <p class="text-xs text-slate-400 mb-1">vs Net Ninjas</p>
+        <p class="tabular text-sm text-teal-700">7&ndash;5</p>
+      </div>
+
+      <div class="court-card is-live">
+        <div class="flex items-center justify-between mb-2">
+          <span class="court-card__num">Court 2</span>
+          <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+        </div>
+        <p class="text-xs font-semibold text-slate-600">Spin Doctors</p>
+        <p class="text-xs text-slate-400 mb-1">vs Smash Sisters</p>
+        <p class="tabular text-sm text-teal-700">8&ndash;6</p>
+      </div>
+
+      <div class="court-card">
+        <div class="flex items-center justify-between mb-2">
+          <span class="court-card__num">Court 3</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>2:30 PM</span>
+        </div>
+        <p class="text-xs font-semibold text-slate-600">Ace Ventura</p>
+        <p class="text-xs text-slate-400">vs Volley Llamas</p>
+      </div>
+
+      <div class="court-card">
+        <div class="flex items-center justify-between mb-2">
+          <span class="court-card__num">Court 4</span>
+          <span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span>
+        </div>
+        <p class="text-xs font-semibold text-slate-600">Kitchen Crashers</p>
+        <p class="text-xs text-slate-400 mb-1">def. Dink or Swim</p>
+        <p class="tabular text-sm text-slate-600">2&ndash;1</p>
+      </div>
+
+      <div class="court-card">
+        <div class="flex items-center justify-between mb-2">
+          <span class="court-card__num">Court 5</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>3:00 PM</span>
+        </div>
+        <p class="text-xs font-semibold text-slate-600">Paddle Battle</p>
+        <p class="text-xs text-slate-400">vs Third Shot Divas</p>
+      </div>
+
+      <div class="court-card">
+        <div class="flex items-center justify-between mb-2">
+          <span class="court-card__num">Court 6</span>
+          <span class="status-badge is-delayed"><span class="status-badge__dot"></span>Delayed</span>
+        </div>
+        <p class="text-xs font-semibold text-slate-600">Maintenance</p>
+        <p class="text-xs text-slate-400">Resurfacing &mdash; ~15 min</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ LIVE NOW ============ -->
+  <section>
+    <div class="section-heading">
+      <h2 class="font-display font-bold text-xl text-slate-800">Live Now</h2>
+      <a href="matches.html" class="text-sm font-semibold text-teal-700 hover:underline">View all matches &rarr;</a>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4">
+
+      <a href="match-detail.html" class="match-card is-live">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 1 &middot; Pool A</span>
+          <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team">Alpha Smashers</span>
+          <span class="match-card__score">11&nbsp;&nbsp;7</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team">Net Ninjas</span>
+          <span class="match-card__score">9&nbsp;&nbsp;5</span>
+        </div>
+        <div class="match-card__footer">
+          <span>Game 2 of 3</span>
+          <span class="font-semibold text-orange-600">Alpha serving</span>
+        </div>
+      </a>
+
+      <a href="match-detail.html" class="match-card is-live">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 2 &middot; Pool B</span>
+          <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team">Spin Doctors</span>
+          <span class="match-card__score">8</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team">Smash Sisters</span>
+          <span class="match-card__score">6</span>
+        </div>
+        <div class="match-card__footer">
+          <span>Game 1 of 3</span>
+          <span class="font-semibold text-orange-600">Spin Doctors serving</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ UP NEXT ============ -->
+  <section>
+    <div class="section-heading">
+      <h2 class="font-display font-bold text-xl text-slate-800">Up Next</h2>
+    </div>
+    <div class="flex gap-4 overflow-x-auto scroll-rail pb-2">
+
+      <a href="match-detail.html" class="match-card flex-shrink-0 w-72">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 3 &middot; Pool A</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>2:30 PM</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Ace Ventura</span></div>
+        <div class="match-card__row"><span class="match-card__team">Volley Llamas</span></div>
+        <div class="match-card__footer"><span>Round 3</span><span>Best of 3 to 11</span></div>
+      </a>
+
+      <a href="match-detail.html" class="match-card flex-shrink-0 w-72">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 5 &middot; Pool C</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>3:00 PM</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Paddle Battle</span></div>
+        <div class="match-card__row"><span class="match-card__team">Third Shot Divas</span></div>
+        <div class="match-card__footer"><span>Round 3</span><span>Best of 3 to 11</span></div>
+      </a>
+
+      <a href="match-detail.html" class="match-card flex-shrink-0 w-72">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 1 &middot; Pool A</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>3:45 PM</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Kitchen Crashers</span></div>
+        <div class="match-card__row"><span class="match-card__team">Ace Ventura</span></div>
+        <div class="match-card__footer"><span>Round 4</span><span>Best of 3 to 11</span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ RECENT RESULTS ============ -->
+  <section>
+    <div class="section-heading">
+      <h2 class="font-display font-bold text-xl text-slate-800">Recent Results</h2>
+      <a href="standings.html" class="text-sm font-semibold text-teal-700 hover:underline">View standings &rarr;</a>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-4">
+
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 4 &middot; Pool B</span>
+          <span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team is-winner">Kitchen Crashers</span>
+          <span class="match-card__score is-winner">2</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team">Dink or Swim</span>
+          <span class="match-card__score">1</span>
+        </div>
+        <div class="match-card__footer"><span>11-7, 9-11, 11-6</span></div>
+      </a>
+
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 2 &middot; Pool A</span>
+          <span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team is-winner">Ace Ventura</span>
+          <span class="match-card__score is-winner">2</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team">Net Ninjas</span>
+          <span class="match-card__score">0</span>
+        </div>
+        <div class="match-card__footer"><span>11-4, 11-6</span></div>
+      </a>
+
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 6 &middot; Pool C</span>
+          <span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team is-winner">Smash Sisters</span>
+          <span class="match-card__score is-winner">2</span>
+        </div>
+        <div class="match-card__row">
+          <span class="match-card__team">Paddle Battle</span>
+          <span class="match-card__score">1</span>
+        </div>
+        <div class="match-card__footer"><span>9-11, 11-8, 11-9</span></div>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-4 border-t border-slate-200 text-sm text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+  <span>&copy; 2026 Summer Smash Pickleball Championship</span>
+  <a href="admin-login.html" class="font-semibold text-slate-500 hover:text-teal-700">Tournament Staff Login</a>
+</footer>
+
+<!-- ============ MOBILE BOTTOM TAB BAR ============ -->
+<nav class="pb-tabbar">
+  <a href="index.html" class="pb-tabbar__item is-active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Dashboard
+  </a>
+  <a href="standings.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+    Standings
+  </a>
+  <a href="matches.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+    Matches
+  </a>
+  <a href="team.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke-linecap="round"/></svg>
+    Teams
+  </a>
+</nav>
+
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Operations Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="admin-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar hidden lg:flex" id="adminSidebar">
+    <div class="flex items-center gap-2.5 px-5 py-5">
+      <span class="pb-nav__brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="leading-tight">
+        <p class="font-display font-bold text-white text-sm">Summer Smash</p>
+        <p class="text-[0.62rem] text-slate-400 uppercase tracking-wider font-bold">Admin Console</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 py-2 space-y-0.5">
+      <a href="admin-dashboard.html" class="admin-sidebar__link is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a href="admin-matches.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+        Matches
+      </a>
+      <a href="admin-standings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+        Pools &amp; Standings
+      </a>
+      <a href="admin-teams.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M15.5 14.3c2.9.3 5 2.3 5 5.2"/></svg>
+        Teams
+      </a>
+      <a href="admin-schedule.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke-linecap="round"/></svg>
+        Courts &amp; Schedule
+      </a>
+      <a href="admin-settings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="px-3 py-4 border-t border-white/10">
+      <div class="flex items-center gap-2.5 px-2 mb-3">
+        <span class="avatar" style="width:34px;height:34px;font-size:0.8rem;background:var(--pb-orange-500);">DA</span>
+        <div class="leading-tight">
+          <p class="text-white text-sm font-semibold">Dana Alvarez</p>
+          <p class="text-[0.68rem] text-slate-400">Tournament Director</p>
+        </div>
+      </div>
+      <a href="admin-login.html" class="admin-sidebar__link !px-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke-linecap="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="flex-1 min-w-0">
+
+    <!-- Top bar -->
+    <div class="admin-topbar">
+      <div class="px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden p-2 -ml-2 text-slate-500" onclick="document.getElementById('adminSidebar').classList.toggle('hidden'); document.getElementById('adminSidebar').classList.toggle('flex');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+          </button>
+          <div>
+            <h1 class="font-display font-bold text-lg text-slate-800 leading-tight">Operations Overview</h1>
+            <p class="text-xs text-slate-400">PickleBall &middot; Saturday, June 13 &middot; 1-Day Event</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="index.html" class="btn btn-outline btn-sm hidden sm:inline-flex">View Public Site</a>
+          <a href="admin-matches.html" class="btn btn-accent btn-sm">+ New Match</a>
+        </div>
+      </div>
+    </div>
+
+    <main class="p-4 sm:p-6 space-y-7">
+
+      <!-- Alerts -->
+      <div class="space-y-2" id="alertList">
+        <div class="alert-banner is-warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.86L1.8 18a1.5 1.5 0 001.3 2.25h17.8a1.5 1.5 0 001.3-2.25L13.7 3.86a1.5 1.5 0 00-2.6 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="flex-1">Court 6 is delayed ~15 min for resurfacing &mdash; hold matches assigned there.</span>
+          <button class="alert-banner__dismiss" onclick="this.closest('.alert-banner').remove()" aria-label="Dismiss">&times;</button>
+        </div>
+        <div class="alert-banner is-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11.5 11.5h1v5h-1" stroke-linecap="round"/></svg>
+          <span class="flex-1">2 matches in the Ready Queue are waiting for an open court.</span>
+          <button class="alert-banner__dismiss" onclick="this.closest('.alert-banner').remove()" aria-label="Dismiss">&times;</button>
+        </div>
+        <div class="alert-banner is-critical">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6" stroke-linecap="round"/></svg>
+          <span class="flex-1">2 teams in Pool B have not checked in yet &mdash; Rally Rebels, Top Spin Titans.</span>
+          <button class="alert-banner__dismiss" onclick="this.closest('.alert-banner').remove()" aria-label="Dismiss">&times;</button>
+        </div>
+      </div>
+
+      <!-- Day timeline -->
+      <section>
+        <div class="section-heading">
+          <h2 class="font-display font-bold text-lg text-slate-800">Day Timeline</h2>
+          <a href="admin-settings.html" class="text-sm font-semibold text-teal-700 hover:underline">Edit schedule &rarr;</a>
+        </div>
+        <div class="timeline-strip">
+          <div class="timeline-block is-done">
+            <div class="timeline-block__label">Check-in</div>
+            <div class="timeline-block__time">7:30 &ndash; 8:30 AM</div>
+          </div>
+          <div class="timeline-block is-now">
+            <div class="timeline-block__label">Pool Play</div>
+            <div class="timeline-block__time">8:30 AM &ndash; 2:30 PM</div>
+          </div>
+          <div class="timeline-block">
+            <div class="timeline-block__label">Bracket Play</div>
+            <div class="timeline-block__time">2:30 &ndash; 4:30 PM</div>
+          </div>
+          <div class="timeline-block">
+            <div class="timeline-block__label">Medal Matches</div>
+            <div class="timeline-block__time">4:30 &ndash; 5:00 PM</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stat tiles -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="stat-tile">
+          <div class="stat-tile__value">126</div>
+          <div class="stat-tile__label">Total Matches</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value !text-orange-600">2</div>
+          <div class="stat-tile__label">Live Now</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value !text-teal-700">58</div>
+          <div class="stat-tile__label">Completed</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value">44<span class="text-slate-300 text-lg">/48</span></div>
+          <div class="stat-tile__label">Teams Checked In</div>
+        </div>
+      </div>
+
+      <!-- Court grid with quick actions -->
+      <section>
+        <div class="section-heading">
+          <h2 class="font-display font-bold text-lg text-slate-800">Court Status</h2>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+
+          <div class="court-card is-live">
+            <div class="flex items-center justify-between mb-2">
+              <span class="court-card__num">Court 1</span>
+              <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+            </div>
+            <p class="text-xs font-semibold text-slate-600">Alpha Smashers</p>
+            <p class="text-xs text-slate-400 mb-2">vs Net Ninjas &middot; 7-5</p>
+            <a href="admin-score.html" class="btn btn-outline btn-sm w-full !text-[0.7rem]">Manage Score</a>
+          </div>
+
+          <div class="court-card is-live">
+            <div class="flex items-center justify-between mb-2">
+              <span class="court-card__num">Court 2</span>
+              <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+            </div>
+            <p class="text-xs font-semibold text-slate-600">Spin Doctors</p>
+            <p class="text-xs text-slate-400 mb-2">vs Smash Sisters &middot; 8-6</p>
+            <a href="admin-score.html" class="btn btn-outline btn-sm w-full !text-[0.7rem]">Manage Score</a>
+          </div>
+
+          <div class="court-card">
+            <div class="flex items-center justify-between mb-2">
+              <span class="court-card__num">Court 3</span>
+              <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>2:30 PM</span>
+            </div>
+            <p class="text-xs font-semibold text-slate-600">Ace Ventura</p>
+            <p class="text-xs text-slate-400 mb-2">vs Volley Llamas</p>
+            <a href="admin-score.html" class="btn btn-primary btn-sm w-full !text-[0.7rem]">Start Match</a>
+          </div>
+
+          <div class="court-card" id="court-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="court-card__num">Court 4</span>
+              <span class="status-badge is-upcoming" id="court4Badge"><span class="status-badge__dot"></span>Open</span>
+            </div>
+            <div id="court4Slot">
+              <p class="text-xs text-slate-400 mb-2">No match assigned</p>
+              <div class="assign-picker">
+                <button class="btn btn-primary btn-sm w-full !text-[0.7rem]" onclick="togglePicker('court4Picker')">+ Assign Next Match</button>
+                <div class="assign-picker__panel" id="court4Picker">
+                  <button class="assign-picker__option" onclick="assignToCourt(4, 'rq1')">Dink Dynasty vs Top Spin Titans</button>
+                  <button class="assign-picker__option" onclick="assignToCourt(4, 'rq2')">Baseline Bandits vs Rally Rebels</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="court-card">
+            <div class="flex items-center justify-between mb-2">
+              <span class="court-card__num">Court 5</span>
+              <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>3:00 PM</span>
+            </div>
+            <p class="text-xs font-semibold text-slate-600">Paddle Battle</p>
+            <p class="text-xs text-slate-400 mb-2">vs Third Shot Divas</p>
+            <a href="admin-score.html" class="btn btn-primary btn-sm w-full !text-[0.7rem]">Start Match</a>
+          </div>
+
+          <div class="court-card">
+            <div class="flex items-center justify-between mb-2">
+              <span class="court-card__num">Court 6</span>
+              <span class="status-badge is-delayed"><span class="status-badge__dot"></span>Delayed</span>
+            </div>
+            <p class="text-xs font-semibold text-slate-600">Maintenance</p>
+            <p class="text-xs text-slate-400 mb-2">Resurfacing &mdash; ~15 min</p>
+            <button class="btn btn-outline btn-sm w-full !text-[0.7rem]">Mark Ready</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Ready Queue -->
+      <section>
+        <div class="section-heading">
+          <h2 class="font-display font-bold text-lg text-slate-800">Ready Queue</h2>
+          <span class="badge-chip">Checked-in &amp; waiting for a court</span>
+        </div>
+        <div class="space-y-2" id="readyQueue">
+          <div class="ready-queue-item" id="rq1">
+            <div class="ready-queue-item__teams">
+              <p>Dink Dynasty <span class="text-slate-400 font-normal">vs</span> Top Spin Titans</p>
+              <p class="ready-queue-item__meta">Pool B &middot; Both teams checked in</p>
+            </div>
+            <div class="assign-picker">
+              <button class="btn btn-outline btn-sm !text-[0.7rem]" onclick="togglePicker('rq1Picker')">Assign to Court &#9662;</button>
+              <div class="assign-picker__panel" id="rq1Picker">
+                <button class="assign-picker__option" onclick="assignToCourt(4, 'rq1')">Court 4 &mdash; Open</button>
+              </div>
+            </div>
+          </div>
+          <div class="ready-queue-item" id="rq2">
+            <div class="ready-queue-item__teams">
+              <p>Baseline Bandits <span class="text-slate-400 font-normal">vs</span> Rally Rebels</p>
+              <p class="ready-queue-item__meta">Women's &middot; Pool C &middot; Both teams checked in</p>
+            </div>
+            <div class="assign-picker">
+              <button class="btn btn-outline btn-sm !text-[0.7rem]" onclick="togglePicker('rq2Picker')">Assign to Court &#9662;</button>
+              <div class="assign-picker__panel" id="rq2Picker">
+                <button class="assign-picker__option" onclick="assignToCourt(4, 'rq2')">Court 4 &mdash; Open</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Condensed match feed -->
+      <section>
+        <div class="section-heading">
+          <h2 class="font-display font-bold text-lg text-slate-800">Match Feed</h2>
+          <a href="admin-matches.html" class="text-sm font-semibold text-teal-700 hover:underline">View all matches &rarr;</a>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2">Live</p>
+            <div class="space-y-2">
+              <a href="admin-score.html" class="match-card is-live !p-3 block">
+                <div class="match-card__meta"><span class="match-card__court">Court 1</span><span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span></div>
+                <div class="match-card__row"><span class="match-card__team">Alpha Smashers</span><span class="match-card__score">7</span></div>
+                <div class="match-card__row"><span class="match-card__team">Net Ninjas</span><span class="match-card__score">5</span></div>
+              </a>
+              <a href="admin-score.html" class="match-card is-live !p-3 block">
+                <div class="match-card__meta"><span class="match-card__court">Court 2</span><span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span></div>
+                <div class="match-card__row"><span class="match-card__team">Spin Doctors</span><span class="match-card__score">8</span></div>
+                <div class="match-card__row"><span class="match-card__team">Smash Sisters</span><span class="match-card__score">6</span></div>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2">Next Up</p>
+            <div class="space-y-2">
+              <a href="admin-matches.html" class="match-card !p-3 block">
+                <div class="match-card__meta"><span class="match-card__court">Court 3 &middot; 2:30 PM</span><span class="status-badge is-upcoming"><span class="status-badge__dot"></span>Upcoming</span></div>
+                <div class="match-card__row"><span class="match-card__team">Ace Ventura</span></div>
+                <div class="match-card__row"><span class="match-card__team">Volley Llamas</span></div>
+              </a>
+              <a href="admin-matches.html" class="match-card !p-3 block">
+                <div class="match-card__meta"><span class="match-card__court">Court 5 &middot; 3:00 PM</span><span class="status-badge is-upcoming"><span class="status-badge__dot"></span>Upcoming</span></div>
+                <div class="match-card__row"><span class="match-card__team">Paddle Battle</span></div>
+                <div class="match-card__row"><span class="match-card__team">Third Shot Divas</span></div>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2">Recently Finished</p>
+            <div class="space-y-2">
+              <a href="admin-matches.html" class="match-card !p-3 block">
+                <div class="match-card__meta"><span class="match-card__court">Court 4 &middot; 12:15 PM</span><span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span></div>
+                <div class="match-card__row"><span class="match-card__team is-winner">Kitchen Crashers</span><span class="match-card__score is-winner">2</span></div>
+                <div class="match-card__row"><span class="match-card__team">Dink or Swim</span><span class="match-card__score">1</span></div>
+              </a>
+              <a href="admin-matches.html" class="match-card !p-3 block">
+                <div class="match-card__meta"><span class="match-card__court">Court 2 &middot; 11:40 AM</span><span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span></div>
+                <div class="match-card__row"><span class="match-card__team is-winner">Smash Sisters</span><span class="match-card__score is-winner">2</span></div>
+                <div class="match-card__row"><span class="match-card__team">Baseline Bandits</span><span class="match-card__score">0</span></div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</div>
+
+<script>
+function togglePicker(id) {
+  document.querySelectorAll('.assign-picker__panel').forEach(function (panel) {
+    if (panel.id !== id) panel.classList.remove('is-open');
+  });
+  document.getElementById(id).classList.toggle('is-open');
+}
+
+function assignToCourt(courtNum, matchId) {
+  var match = document.getElementById(matchId);
+  var slot = document.getElementById('court' + courtNum + 'Slot');
+  var badge = document.getElementById('court' + courtNum + 'Badge');
+  if (!match || !slot) return;
+
+  var teamsLine = match.querySelector('.ready-queue-item__teams p').innerHTML;
+  var metaLine = match.querySelector('.ready-queue-item__meta').textContent.replace('Both teams checked in', 'Assigned just now');
+
+  badge.outerHTML = '<span class="status-badge is-upcoming" id="court' + courtNum + 'Badge"><span class="status-badge__dot"></span>Assigned</span>';
+  slot.innerHTML =
+    '<p class="text-xs font-semibold text-slate-600">' + teamsLine + '</p>' +
+    '<p class="text-xs text-slate-400 mb-2">' + metaLine + '</p>' +
+    '<a href="admin-score.html" class="btn btn-primary btn-sm w-full !text-[0.7rem]">Start Match</a>';
+
+  match.remove();
+
+  var queue = document.getElementById('readyQueue');
+  if (!queue.querySelector('.ready-queue-item')) {
+    queue.innerHTML = '<p class="text-sm text-slate-400 text-center py-4">Ready Queue is empty &mdash; all checked-in matches have a court.</p>';
+  }
+}
+
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.assign-picker')) {
+    document.querySelectorAll('.assign-picker__panel').forEach(function (p) { p.classList.remove('is-open'); });
+  }
+});
+</script>
+
+</body>
+</html>

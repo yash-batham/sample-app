@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Teams &amp; Check-in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="admin-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar hidden lg:flex" id="adminSidebar">
+    <div class="flex items-center gap-2.5 px-5 py-5">
+      <span class="pb-nav__brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="leading-tight">
+        <p class="font-display font-bold text-white text-sm">Summer Smash</p>
+        <p class="text-[0.62rem] text-slate-400 uppercase tracking-wider font-bold">Admin Console</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 py-2 space-y-0.5">
+      <a href="admin-dashboard.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a href="admin-matches.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+        Matches
+      </a>
+      <a href="admin-standings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+        Pools &amp; Standings
+      </a>
+      <a href="admin-teams.html" class="admin-sidebar__link is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M15.5 14.3c2.9.3 5 2.3 5 5.2"/></svg>
+        Teams
+      </a>
+      <a href="admin-schedule.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke-linecap="round"/></svg>
+        Courts &amp; Schedule
+      </a>
+      <a href="admin-settings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="px-3 py-4 border-t border-white/10">
+      <div class="flex items-center gap-2.5 px-2 mb-3">
+        <span class="avatar" style="width:34px;height:34px;font-size:0.8rem;background:var(--pb-orange-500);">DA</span>
+        <div class="leading-tight">
+          <p class="text-white text-sm font-semibold">Dana Alvarez</p>
+          <p class="text-[0.68rem] text-slate-400">Tournament Director</p>
+        </div>
+      </div>
+      <a href="admin-login.html" class="admin-sidebar__link !px-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke-linecap="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="flex-1 min-w-0">
+
+    <div class="admin-topbar">
+      <div class="px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden p-2 -ml-2 text-slate-500" onclick="document.getElementById('adminSidebar').classList.toggle('hidden'); document.getElementById('adminSidebar').classList.toggle('flex');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+          </button>
+          <div>
+            <h1 class="font-display font-bold text-lg text-slate-800 leading-tight">Teams &amp; Check-in</h1>
+            <p class="text-xs text-slate-400">Registration and courtside check-in</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="index.html" class="btn btn-outline btn-sm hidden sm:inline-flex">View Public Site</a>
+          <button class="btn btn-outline btn-sm" title="Demo UI only">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mr-1 inline -mt-0.5"><path d="M21.44 11.05l-9.19 9.19a5 5 0 01-7.07-7.07l9.19-9.19a3.5 3.5 0 014.95 4.95L10.5 17.8a2 2 0 01-2.83-2.83l8.49-8.48" stroke-linecap="round"/></svg>
+            Import CSV
+          </button>
+          <button class="btn btn-accent btn-sm" onclick="toggleRegisterForm()">+ Register Team</button>
+        </div>
+      </div>
+    </div>
+
+    <main class="p-4 sm:p-6 space-y-6">
+
+      <!-- Stat tiles -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="stat-tile">
+          <div class="stat-tile__value" id="statRegistered">48</div>
+          <div class="stat-tile__label">Registered</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value !text-teal-700" id="statCheckedIn">44</div>
+          <div class="stat-tile__label">Checked In</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value !text-orange-600" id="statNotCheckedIn">3</div>
+          <div class="stat-tile__label">Not Checked In</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile__value !text-red-500">1</div>
+          <div class="stat-tile__label">Withdrawn / No-show</div>
+        </div>
+      </div>
+
+      <!-- Register form panel -->
+      <div class="form-panel hidden" id="registerForm">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-display font-bold text-base text-slate-800">Register New Team</h2>
+          <button class="text-slate-400 hover:text-slate-600" onclick="toggleRegisterForm()" aria-label="Close">&times;</button>
+        </div>
+        <form onsubmit="return false;" class="space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="form-field sm:col-span-2">
+              <label class="form-label">Team Name</label>
+              <input type="text" class="form-input" placeholder="e.g. Backspin Bandits">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Player 1 &mdash; Name</label>
+              <input type="text" class="form-input" placeholder="Full name">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Player 1 &mdash; Phone</label>
+              <input type="tel" class="form-input" placeholder="(555) 555-0100">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Player 2 &mdash; Name</label>
+              <input type="text" class="form-input" placeholder="Full name">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Player 2 &mdash; Phone</label>
+              <input type="tel" class="form-input" placeholder="(555) 555-0100">
+            </div>
+            <div class="form-field">
+              <label class="form-label">DUPR / Skill Rating (optional)</label>
+              <input type="text" class="form-input" placeholder="e.g. 4.2">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-4 pt-2 border-t border-teal-200/60">
+            <label class="flex items-center gap-2 text-sm font-semibold text-slate-600">
+              <input type="checkbox" id="autoAssignPool" class="rounded border-slate-300 text-teal-600 focus:ring-teal-500" checked onchange="document.getElementById('manualPoolField').classList.toggle('hidden', this.checked)">
+              Auto-assign to pool by rating/seed
+            </label>
+            <div class="form-field hidden" id="manualPoolField" style="min-width:160px;">
+              <select class="form-select">
+                <option>Pool A</option>
+                <option>Pool B</option>
+                <option>Pool C</option>
+                <option>Pool D</option>
+                <option>Pool E</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="button" class="btn btn-outline btn-sm" onclick="toggleRegisterForm()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" onclick="toggleRegisterForm()">Register Team</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap items-center gap-2">
+        <input type="text" placeholder="Search teams or players&hellip;" class="form-input !w-56 !py-2">
+        <select class="form-select !py-2 !w-auto">
+          <option>All Pools</option>
+          <option>Pool A</option>
+          <option>Pool B</option>
+          <option>Pool C</option>
+          <option>Pool D</option>
+          <option>Pool E</option>
+        </select>
+        <button class="filter-chip is-active">All</button>
+        <button class="filter-chip">Checked In</button>
+        <button class="filter-chip">Not Checked In</button>
+      </div>
+
+      <!-- Bulk action bar -->
+      <div class="hidden items-center justify-between bg-teal-800 text-white rounded-xl px-4 py-2.5 text-sm font-semibold" id="bulkBar">
+        <span id="bulkCount">0 selected</span>
+        <div class="flex gap-2">
+          <button class="btn btn-sm !bg-white !text-teal-800" onclick="bulkCheckIn()">Check In Selected</button>
+          <button class="btn btn-sm !bg-teal-700 !text-white" onclick="clearSelection()">Clear</button>
+        </div>
+      </div>
+
+      <!-- Teams table -->
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th class="!pr-0"><input type="checkbox" onclick="toggleAll(this)"></th>
+                <th>Team</th>
+                <th>Players</th>
+                <th>Pool</th>
+                <th>Seed</th>
+                <th>Record</th>
+                <th>Check-in</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="teamsBody">
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-teal-700);">AS</span>Alpha Smashers</td>
+                <td class="text-slate-500">Jake Coleman, Marco Reyes</td>
+                <td><span class="badge-chip">Pool A</span></td>
+                <td class="tabular">#1</td>
+                <td class="tabular font-semibold text-teal-700">4-0</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-blue-700);">NN</span>Net Ninjas</td>
+                <td class="text-slate-500">Priya Shah, Wendy Cole</td>
+                <td><span class="badge-chip">Pool A</span></td>
+                <td class="tabular">#4</td>
+                <td class="tabular font-semibold">1-3</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-slate-500);">AV</span>Ace Ventura</td>
+                <td class="text-slate-500">Diego Vance, Ray Ventura</td>
+                <td><span class="badge-chip">Pool A</span></td>
+                <td class="tabular">#3</td>
+                <td class="tabular font-semibold text-teal-700">3-1</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-orange-500);">KC</span>Kitchen Crashers</td>
+                <td class="text-slate-500">Tom Baird, Leo Fischer</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td class="tabular">#2</td>
+                <td class="tabular font-semibold text-teal-700">3-1</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-slate-600);">DS</span>Dink or Swim</td>
+                <td class="text-slate-500">Omar Castillo, Ken Price</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td class="tabular">#5</td>
+                <td class="tabular font-semibold">1-2</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-teal-800);">DD</span>Dink Dynasty</td>
+                <td class="text-slate-500">Sam Whit, Cory Nolan</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td class="tabular">#6</td>
+                <td class="tabular font-semibold">0-3</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-red-600);">TT</span>Top Spin Titans</td>
+                <td class="text-slate-500">Rico Fenn, Alex Doyle</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td class="tabular">#7</td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-orange-600 ml-1.5">Not Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-slate-600);">SS</span>Smash Sisters</td>
+                <td class="text-slate-500">Ana Torres, Bella Kim</td>
+                <td><span class="badge-chip">Pool C</span></td>
+                <td class="tabular">#1</td>
+                <td class="tabular font-semibold text-teal-700">4-0</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-blue-800);">BB</span>Baseline Bandits</td>
+                <td class="text-slate-500">Nora Vega, Iris Chan</td>
+                <td><span class="badge-chip">Pool C</span></td>
+                <td class="tabular">#3</td>
+                <td class="tabular font-semibold">2-2</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-red-600);">RR</span>Rally Rebels</td>
+                <td class="text-slate-500">Gina Park, Sue Delgado</td>
+                <td><span class="badge-chip">Pool D</span></td>
+                <td class="tabular">#2</td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-orange-600 ml-1.5">Not Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-teal-600);">TD</span>Third Shot Divas</td>
+                <td class="text-slate-500">Mia Chow, Elle Fry</td>
+                <td><span class="badge-chip">Pool D</span></td>
+                <td class="tabular">#4</td>
+                <td class="tabular font-semibold">1-2</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-blue-700);">SD</span>Spin Doctors</td>
+                <td class="text-slate-500">Chris Malloy, Hana Suzuki</td>
+                <td><span class="badge-chip">Pool E</span></td>
+                <td class="tabular">#1</td>
+                <td class="tabular font-semibold text-teal-700">3-0</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-slate-700);">VL</span>Volley Llamas</td>
+                <td class="text-slate-500">Pat Nunez, Jo Ibarra</td>
+                <td><span class="badge-chip">Pool E</span></td>
+                <td class="tabular">#2</td>
+                <td class="tabular font-semibold">2-1</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-800"><span class="avatar" style="width:28px;height:28px;font-size:0.65rem;background:var(--pb-slate-700);">PB</span>Paddle Battle</td>
+                <td class="text-slate-500">Uma Reid, Nate Voss</td>
+                <td><span class="badge-chip">Pool E</span></td>
+                <td class="tabular">#3</td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td>
+                  <label class="toggle-switch"><input type="checkbox" checked onchange="onCheckinToggle(this)"><span class="toggle-switch__track"></span></label>
+                  <span class="checkin-label text-xs font-semibold text-teal-700 ml-1.5">Checked In</span>
+                </td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm">Edit</button><button class="btn btn-danger btn-sm">Withdraw</button></div></td>
+              </tr>
+
+              <tr>
+                <td class="!pr-0"><input type="checkbox" class="row-check" onclick="updateBulkBar()"></td>
+                <td class="flex items-center gap-2.5 font-semibold text-slate-500 line-through">Backspin Bandits</td>
+                <td class="text-slate-400">Rick Osei, Val Marsh</td>
+                <td><span class="badge-chip">Unassigned</span></td>
+                <td class="tabular text-slate-400">#8</td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td><span class="badge-chip !bg-red-100 !text-red-600">Withdrawn</span></td>
+                <td class="text-right"><div class="inline-flex gap-1.5"><button class="btn btn-outline btn-sm" disabled>Edit</button></div></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="px-4 py-3 text-xs text-slate-400 border-t border-slate-100">Showing 15 of 48 registered teams.</div>
+      </div>
+
+    </main>
+  </div>
+
+</div>
+
+<script>
+function toggleRegisterForm() {
+  document.getElementById('registerForm').classList.toggle('hidden');
+}
+
+function toggleAll(source) {
+  document.querySelectorAll('.row-check').forEach(function (cb) { cb.checked = source.checked; });
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  var count = document.querySelectorAll('.row-check:checked').length;
+  var bar = document.getElementById('bulkBar');
+  document.getElementById('bulkCount').textContent = count + ' selected';
+  bar.classList.toggle('hidden', count === 0);
+  bar.classList.toggle('flex', count > 0);
+}
+
+function clearSelection() {
+  document.querySelectorAll('.row-check').forEach(function (cb) { cb.checked = false; });
+  updateBulkBar();
+}
+
+function onCheckinToggle(input) {
+  var label = input.closest('td').querySelector('.checkin-label');
+  var checkedIn = document.querySelectorAll('#teamsBody .toggle-switch input:checked').length;
+  var total = document.querySelectorAll('#teamsBody .toggle-switch input').length;
+  if (input.checked) {
+    label.textContent = 'Checked In';
+    label.classList.remove('text-orange-600');
+    label.classList.add('text-teal-700');
+  } else {
+    label.textContent = 'Not Checked In';
+    label.classList.remove('text-teal-700');
+    label.classList.add('text-orange-600');
+  }
+  document.getElementById('statCheckedIn').textContent = checkedIn;
+  document.getElementById('statNotCheckedIn').textContent = total - checkedIn;
+}
+
+function bulkCheckIn() {
+  document.querySelectorAll('.row-check:checked').forEach(function (cb) {
+    var toggle = cb.closest('tr').querySelector('.toggle-switch input');
+    if (toggle && !toggle.checked) {
+      toggle.checked = true;
+      onCheckinToggle(toggle);
+    }
+  });
+  clearSelection();
+}
+</script>
+
+</body>
+</html>

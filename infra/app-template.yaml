@@ -1,0 +1,92 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  Pickleball app - Application stack (ECS Task Definition + Service only).
+  Deployed automatically by GitHub Actions after the Infra stack exists.
+  Creates no IAM resources - see DEPLOYMENT.md.
+
+Parameters:
+  InfraStackName:
+    Type: String
+    Default: pickleball-infra
+    Description: "Name of the already-deployed Infra stack, used to import its exports"
+  ImageTag:
+    Type: String
+    Default: latest
+    Description: "Backend Docker image tag in ECR (git SHA), set by CI on each deploy"
+  ContainerPort:
+    Type: Number
+    Default: 8000
+  DesiredCount:
+    Type: Number
+    Default: 1
+
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: pickleball-backend
+      Cpu: "256"
+      Memory: "512"
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !ImportValue {"Fn::Sub": "${InfraStackName}-ECSTaskExecutionRoleArn"}
+      TaskRoleArn: !ImportValue {"Fn::Sub": "${InfraStackName}-ECSTaskRoleArn"}
+      ContainerDefinitions:
+        - Name: backend
+          Image: !Sub
+            - "${RepoUri}:${ImageTag}"
+            - RepoUri: !ImportValue {"Fn::Sub": "${InfraStackName}-ECRRepositoryUri"}
+          PortMappings:
+            - {ContainerPort: !Ref ContainerPort, Protocol: tcp}
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !ImportValue {"Fn::Sub": "${InfraStackName}-BackendLogGroupName"}
+              awslogs-region: !Ref "AWS::Region"
+              awslogs-stream-prefix: backend
+          Environment:
+            - Name: DB_HOST
+              Value: !ImportValue {"Fn::Sub": "${InfraStackName}-DBInstanceEndpoint"}
+            - {Name: DB_PORT, Value: "5432"}
+            - {Name: DB_NAME, Value: pickleball}
+            - {Name: DB_SCHEMA, Value: public}
+            - Name: CORS_ORIGINS
+              Value: !Sub
+                - '["https://${CFDomain}"]'
+                - CFDomain: !ImportValue {"Fn::Sub": "${InfraStackName}-CloudFrontDomainName"}
+          Secrets:
+            - Name: DB_USER
+              ValueFrom: !Sub
+                - "${SecretArn}:username::"
+                - SecretArn: !ImportValue {"Fn::Sub": "${InfraStackName}-DBSecretArn"}
+            - Name: DB_PASSWORD
+              ValueFrom: !Sub
+                - "${SecretArn}:password::"
+                - SecretArn: !ImportValue {"Fn::Sub": "${InfraStackName}-DBSecretArn"}
+            - Name: JWT_SECRET
+              ValueFrom: !ImportValue {"Fn::Sub": "${InfraStackName}-JwtSecretArn"}
+
+  ECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: pickleball-backend
+      Cluster: !ImportValue {"Fn::Sub": "${InfraStackName}-ECSClusterName"}
+      LaunchType: FARGATE
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets:
+            - !ImportValue {"Fn::Sub": "${InfraStackName}-PublicSubnetA"}
+            - !ImportValue {"Fn::Sub": "${InfraStackName}-PublicSubnetB"}
+          SecurityGroups:
+            - !ImportValue {"Fn::Sub": "${InfraStackName}-FargateSecurityGroupId"}
+      LoadBalancers:
+        - ContainerName: backend
+          ContainerPort: !Ref ContainerPort
+          TargetGroupArn: !ImportValue {"Fn::Sub": "${InfraStackName}-TargetGroupArn"}
+
+Outputs:
+  ServiceName: {Value: !GetAtt ECSService.Name}
+  TaskDefinitionArn: {Value: !Ref TaskDefinition}

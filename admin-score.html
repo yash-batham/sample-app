@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Live Score Entry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body class="bg-slate-50">
+
+<!-- Compact top bar (mobile-first, courtside use) -->
+<div class="admin-topbar">
+  <div class="px-3 sm:px-6 h-14 flex items-center justify-between gap-2">
+    <a href="admin-matches.html" class="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-teal-700">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Matches
+    </a>
+    <span class="badge-chip">Court 1 &middot; Bracket QF</span>
+  </div>
+</div>
+
+<main class="max-w-2xl mx-auto px-3 sm:px-6 py-4 space-y-4">
+
+  <!-- Format badge + game chips -->
+  <div class="flex items-center justify-between flex-wrap gap-2">
+    <span class="badge-chip !bg-teal-50 !text-teal-800" id="formatBadge">Bracket &middot; Best of 3 to 11 &middot; Win by 2 &middot; Rally</span>
+    <div class="game-chip-row" id="gameChips"></div>
+  </div>
+
+  <!-- Score tap zones -->
+  <div class="flex flex-col sm:flex-row gap-3" id="tapZones">
+    <div class="score-tap-zone" id="zoneA" onclick="addPoint('a')">
+      <div class="score-tap-zone__name">Alpha Smashers</div>
+      <div class="score-tap-zone__players">Jake Coleman &amp; Marco Reyes</div>
+      <div class="score-tap-zone__value" id="scoreA">7</div>
+      <div class="score-tap-zone__hint">Tap anywhere to add point</div>
+    </div>
+    <div class="score-tap-zone" id="zoneB" onclick="addPoint('b')">
+      <div class="score-tap-zone__name">Net Ninjas</div>
+      <div class="score-tap-zone__players">Priya Shah &amp; Wendy Cole</div>
+      <div class="score-tap-zone__value" id="scoreB">5</div>
+      <div class="score-tap-zone__hint">Tap anywhere to add point</div>
+    </div>
+  </div>
+
+  <!-- Corrections -->
+  <div class="flex items-center justify-between gap-2">
+    <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); subtractPoint('a')">&minus;1 Alpha</button>
+    <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); undoLast()">Undo Last Point</button>
+    <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); subtractPoint('b')">&minus;1 Net Ninjas</button>
+  </div>
+
+  <!-- Serve control -->
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
+    <p class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2">Serving</p>
+    <div class="grid grid-cols-2 gap-3">
+      <button class="btn btn-sm" id="serveBtnA" onclick="setServer('a')">Alpha Smashers</button>
+      <button class="btn btn-sm" id="serveBtnB" onclick="setServer('b')">Net Ninjas</button>
+    </div>
+    <div class="flex items-center justify-center gap-2 mt-3">
+      <span class="text-xs font-semibold text-slate-500">Server:</span>
+      <button class="filter-chip is-active !py-1 !px-3 !text-xs" id="serverNumBtn1" onclick="setServerNum(1)">Server #1</button>
+      <button class="filter-chip !py-1 !px-3 !text-xs" id="serverNumBtn2" onclick="setServerNum(2)">Server #2</button>
+    </div>
+    <p class="text-[0.68rem] text-slate-400 text-center mt-2">Doubles side-out: both players serve before a side-out. Toggle manually when the serve passes.</p>
+  </div>
+
+  <!-- Game complete panel -->
+  <div class="hidden bg-white border-2 border-teal-500 rounded-2xl shadow-md p-5 text-center space-y-3" id="gameCompletePanel">
+    <p class="font-display font-bold text-lg text-teal-800" id="gameCompleteText">Game Complete</p>
+    <div class="flex justify-center gap-2">
+      <button class="btn btn-outline btn-sm" onclick="editScore()">Edit Score</button>
+      <button class="btn btn-primary btn-sm" id="nextGameBtn" onclick="startNextGame()">Confirm &amp; Start Next Game</button>
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="flex flex-wrap gap-2 justify-center">
+    <button class="btn btn-outline btn-sm" onclick="logEvent('Timeout called')">Timeout</button>
+    <button class="btn btn-outline btn-sm" onclick="logEvent('Injury reported')">Injury</button>
+    <button class="btn btn-danger btn-sm" onclick="logEvent('Forfeit flagged for review')">Forfeit</button>
+  </div>
+
+  <!-- Action log -->
+  <div>
+    <p class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2">Action Log</p>
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm divide-y divide-slate-100" id="actionLog"></div>
+  </div>
+
+</main>
+
+<script>
+var FORMATS = {
+  bracket: { label: 'Bracket &middot; Best of 3 to 11 points &middot; Win by 2 &middot; Rally', target: 11, winBy: 2, bestOf: 3 },
+  pool: { label: 'Pool Play &middot; Game to 15 &middot; Win by 1 &middot; Rally', target: 15, winBy: 1, bestOf: 1 }
+};
+var format = FORMATS.bracket;
+
+var state = {
+  games: [ { a: 11, b: 9, winner: 'a' }, { a: 7, b: 5, winner: null } ],
+  server: 'a',
+  serverNum: 1,
+  log: [],
+  history: [] // for undo: {gameIndex, side}
+};
+
+var teamNames = { a: 'Alpha Smashers', b: 'Net Ninjas' };
+
+function currentGame() {
+  return state.games[state.games.length - 1];
+}
+
+function render() {
+  var g = currentGame();
+  document.getElementById('scoreA').textContent = g.a;
+  document.getElementById('scoreB').textContent = g.b;
+
+  document.getElementById('zoneA').classList.toggle('is-serving', state.server === 'a' && !g.winner);
+  document.getElementById('zoneB').classList.toggle('is-serving', state.server === 'b' && !g.winner);
+  document.getElementById('zoneA').classList.toggle('is-locked', !!g.winner);
+  document.getElementById('zoneB').classList.toggle('is-locked', !!g.winner);
+
+  document.getElementById('serveBtnA').className = 'btn btn-sm ' + (state.server === 'a' ? 'btn-primary' : 'btn-outline');
+  document.getElementById('serveBtnB').className = 'btn btn-sm ' + (state.server === 'b' ? 'btn-primary' : 'btn-outline');
+  document.getElementById('serverNumBtn1').classList.toggle('is-active', state.serverNum === 1);
+  document.getElementById('serverNumBtn2').classList.toggle('is-active', state.serverNum === 2);
+
+  renderGameChips();
+  renderLog();
+
+  var panel = document.getElementById('gameCompletePanel');
+  if (g.winner) {
+    var winsA = state.games.filter(function (x) { return x.winner === 'a'; }).length;
+    var winsB = state.games.filter(function (x) { return x.winner === 'b'; }).length;
+    var neededToWinMatch = Math.ceil(format.bestOf / 2);
+    var matchOver = winsA >= neededToWinMatch || winsB >= neededToWinMatch;
+    document.getElementById('gameCompleteText').textContent =
+      'Game ' + state.games.length + ' Complete — ' + teamNames[g.winner] + ' win ' + g.a + '–' + g.b;
+    document.getElementById('nextGameBtn').textContent = matchOver ? 'Complete Match' : 'Confirm & Start Next Game';
+    document.getElementById('nextGameBtn').onclick = matchOver ? completeMatch : startNextGame;
+    panel.classList.remove('hidden');
+  } else {
+    panel.classList.add('hidden');
+  }
+}
+
+function renderGameChips() {
+  var html = '';
+  for (var i = 0; i < format.bestOf; i++) {
+    var g = state.games[i];
+    if (g) {
+      var isCurrent = i === state.games.length - 1 && !g.winner;
+      html += '<div class="game-chip' + (isCurrent ? ' is-current' : '') + '"><span class="game-chip__label">Game ' + (i + 1) + (isCurrent ? ' &middot; Live' : '') + '</span><span class="game-chip__score">' + g.a + '&ndash;' + g.b + '</span></div>';
+    } else {
+      html += '<div class="game-chip"><span class="game-chip__label">Game ' + (i + 1) + '</span><span class="game-chip__score">&ndash;</span></div>';
+    }
+  }
+  document.getElementById('gameChips').innerHTML = html;
+}
+
+function renderLog() {
+  var el = document.getElementById('actionLog');
+  if (!state.log.length) {
+    el.innerHTML = '<p class="text-xs text-slate-400 px-4 py-3">No events yet.</p>';
+    return;
+  }
+  el.innerHTML = state.log.slice(0, 6).map(function (entry) {
+    return '<div class="flex items-center justify-between px-4 py-2.5"><span class="text-sm text-slate-600">' + entry + '</span></div>';
+  }).join('');
+}
+
+function checkWin() {
+  var g = currentGame();
+  if (g.winner) return;
+  if (g.a >= format.target && g.a - g.b >= format.winBy) g.winner = 'a';
+  else if (g.b >= format.target && g.b - g.a >= format.winBy) g.winner = 'b';
+}
+
+function addPoint(side) {
+  var g = currentGame();
+  if (g.winner) return;
+  g[side]++;
+  state.history.push({ gameIndex: state.games.length - 1, side: side });
+  state.log.unshift(teamNames[side] + ' +1 point &middot; now ' + g.a + '&ndash;' + g.b);
+  checkWin();
+  render();
+}
+
+function subtractPoint(side) {
+  var g = currentGame();
+  if (g[side] > 0) g[side]--;
+  if (g.winner && !(g.a >= format.target && g.a - g.b >= format.winBy) && !(g.b >= format.target && g.b - g.a >= format.winBy)) {
+    g.winner = null;
+  }
+  state.log.unshift('Correction: &minus;1 ' + teamNames[side] + ' &middot; now ' + g.a + '&ndash;' + g.b);
+  render();
+}
+
+function undoLast() {
+  var last = state.history.pop();
+  if (!last) return;
+  var g = state.games[last.gameIndex];
+  if (g[last.side] > 0) g[last.side]--;
+  g.winner = null;
+  state.log.unshift('Undo last point &middot; now ' + g.a + '&ndash;' + g.b);
+  render();
+}
+
+function setServer(side) {
+  state.server = side;
+  state.serverNum = 1;
+  state.log.unshift(teamNames[side] + ' now serving (Server #1)');
+  render();
+}
+
+function setServerNum(num) {
+  state.serverNum = num;
+  state.log.unshift(teamNames[state.server] + ' &mdash; switched to Server #' + num);
+  render();
+}
+
+function startNextGame() {
+  state.games.push({ a: 0, b: 0, winner: null });
+  var lastGame = state.games[state.games.length - 2];
+  state.server = lastGame.winner === 'a' ? 'b' : 'a';
+  state.serverNum = 1;
+  state.log.unshift('Game ' + (state.games.length) + ' started &mdash; ' + teamNames[state.server] + ' serves first');
+  render();
+}
+
+function editScore() {
+  var g = currentGame();
+  g.winner = null;
+  state.log.unshift('Editing score for Game ' + state.games.length);
+  render();
+}
+
+function completeMatch() {
+  state.log.unshift('Match completed &mdash; returning to Matches');
+  renderLog();
+  window.location.href = 'admin-matches.html';
+}
+
+function logEvent(text) {
+  state.log.unshift(text + ' &middot; ' + teamNames[state.server]);
+  renderLog();
+}
+
+render();
+</script>
+
+</body>
+</html>

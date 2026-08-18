@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Matches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="admin-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar hidden lg:flex" id="adminSidebar">
+    <div class="flex items-center gap-2.5 px-5 py-5">
+      <span class="pb-nav__brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="leading-tight">
+        <p class="font-display font-bold text-white text-sm">Summer Smash</p>
+        <p class="text-[0.62rem] text-slate-400 uppercase tracking-wider font-bold">Admin Console</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 py-2 space-y-0.5">
+      <a href="admin-dashboard.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a href="admin-matches.html" class="admin-sidebar__link is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+        Matches
+      </a>
+      <a href="admin-standings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+        Pools &amp; Standings
+      </a>
+      <a href="admin-teams.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M15.5 14.3c2.9.3 5 2.3 5 5.2"/></svg>
+        Teams
+      </a>
+      <a href="admin-schedule.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke-linecap="round"/></svg>
+        Courts &amp; Schedule
+      </a>
+      <a href="admin-settings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="px-3 py-4 border-t border-white/10">
+      <div class="flex items-center gap-2.5 px-2 mb-3">
+        <span class="avatar" style="width:34px;height:34px;font-size:0.8rem;background:var(--pb-orange-500);">DA</span>
+        <div class="leading-tight">
+          <p class="text-white text-sm font-semibold">Dana Alvarez</p>
+          <p class="text-[0.68rem] text-slate-400">Tournament Director</p>
+        </div>
+      </div>
+      <a href="admin-login.html" class="admin-sidebar__link !px-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke-linecap="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="flex-1 min-w-0">
+
+    <div class="admin-topbar">
+      <div class="px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden p-2 -ml-2 text-slate-500" onclick="document.getElementById('adminSidebar').classList.toggle('hidden'); document.getElementById('adminSidebar').classList.toggle('flex');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+          </button>
+          <div>
+            <h1 class="font-display font-bold text-lg text-slate-800 leading-tight">Matches</h1>
+            <p class="text-xs text-slate-400">Full match lifecycle &mdash; schedule, start, score, resolve</p>
+          </div>
+        </div>
+        <a href="index.html" class="btn btn-outline btn-sm hidden sm:inline-flex">View Public Site</a>
+      </div>
+    </div>
+
+    <main class="p-4 sm:p-6 space-y-5">
+
+      <!-- Filters -->
+      <div class="flex flex-wrap items-center gap-2">
+        <input type="text" placeholder="Search teams&hellip;" class="form-input !w-52 !py-2">
+        <select class="form-select !py-2 !w-auto">
+          <option>All Courts</option>
+          <option>Court 1</option><option>Court 2</option><option>Court 3</option>
+          <option>Court 4</option><option>Court 5</option><option>Court 6</option>
+        </select>
+        <div class="flex gap-1.5 flex-wrap">
+          <button class="filter-chip is-active">All</button>
+          <button class="filter-chip">Unscheduled</button>
+          <button class="filter-chip">Upcoming</button>
+          <button class="filter-chip">Live</button>
+          <button class="filter-chip">Delayed</button>
+          <button class="filter-chip">Completed</button>
+          <button class="filter-chip">Forfeited</button>
+        </div>
+      </div>
+
+      <!-- Matches table -->
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Match</th>
+                <th>Pool</th>
+                <th>Court</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Score</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- LIVE -->
+              <tr id="row-m1">
+                <td class="font-semibold text-slate-800">Alpha Smashers <span class="text-slate-400 font-normal">vs</span> Net Ninjas</td>
+                <td><span class="badge-chip">Pool A</span></td>
+                <td>Court 1</td>
+                <td class="tabular">1:45 PM</td>
+                <td><span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span></td>
+                <td class="tabular font-semibold">11-9, 7-5</td>
+                <td class="text-right">
+                  <div class="inline-flex gap-1.5">
+                    <a href="admin-score.html" class="btn btn-outline btn-sm">Manage Score</a>
+                    <button class="btn btn-sm !bg-slate-700 !text-white" onclick="forceComplete('m1')">Force Complete</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- LIVE -->
+              <tr id="row-m2">
+                <td class="font-semibold text-slate-800">Spin Doctors <span class="text-slate-400 font-normal">vs</span> Smash Sisters</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td>Court 2</td>
+                <td class="tabular">1:45 PM</td>
+                <td><span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span></td>
+                <td class="tabular font-semibold">8-6</td>
+                <td class="text-right">
+                  <div class="inline-flex gap-1.5">
+                    <a href="admin-score.html" class="btn btn-outline btn-sm">Manage Score</a>
+                    <button class="btn btn-sm !bg-slate-700 !text-white" onclick="forceComplete('m2')">Force Complete</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- UPCOMING (scheduled) -->
+              <tr id="row-m3">
+                <td class="font-semibold text-slate-800">Ace Ventura <span class="text-slate-400 font-normal">vs</span> Volley Llamas</td>
+                <td><span class="badge-chip">Pool A</span></td>
+                <td>Court 3</td>
+                <td class="tabular">2:30 PM</td>
+                <td><span class="status-badge is-upcoming"><span class="status-badge__dot"></span>Upcoming</span></td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td class="text-right">
+                  <div class="inline-flex gap-1.5 justify-end">
+                    <button class="btn btn-outline btn-sm">Edit</button>
+                    <a href="admin-score.html" class="btn btn-primary btn-sm">Start</a>
+                    <div class="assign-picker">
+                      <button class="btn btn-outline btn-sm" onclick="togglePicker('delay-m3')">Delay</button>
+                      <div class="assign-picker__panel" id="delay-m3">
+                        <button class="assign-picker__option" onclick="setDelayed('m3','Rain / weather hold')">Rain / weather hold</button>
+                        <button class="assign-picker__option" onclick="setDelayed('m3','Court maintenance')">Court maintenance</button>
+                        <button class="assign-picker__option" onclick="setDelayed('m3','Team running late')">Team running late</button>
+                      </div>
+                    </div>
+                    <div class="assign-picker">
+                      <button class="btn btn-danger btn-sm" onclick="togglePicker('ff-m3')">Forfeit</button>
+                      <div class="assign-picker__panel" id="ff-m3">
+                        <button class="assign-picker__option" onclick="setForfeit('m3','Ace Ventura','No-show')">Winner: Ace Ventura &mdash; No-show</button>
+                        <button class="assign-picker__option" onclick="setForfeit('m3','Volley Llamas','No-show')">Winner: Volley Llamas &mdash; No-show</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- UNSCHEDULED -->
+              <tr id="row-m4">
+                <td class="font-semibold text-slate-800">Backspin Bandits <span class="text-slate-400 font-normal">vs</span> Paddle Pirates</td>
+                <td><span class="badge-chip">Pool C</span></td>
+                <td class="text-slate-400">&ndash;</td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td><span class="status-badge is-upcoming" style="background:var(--pb-slate-100);color:var(--pb-slate-500);"><span class="status-badge__dot" style="background:var(--pb-slate-400);"></span>Unscheduled</span></td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td class="text-right">
+                  <div class="assign-picker inline-block">
+                    <button class="btn btn-primary btn-sm" onclick="togglePicker('assign-m4')">Assign Court &amp; Time</button>
+                    <div class="assign-picker__panel" id="assign-m4">
+                      <button class="assign-picker__option" onclick="assignCourtTime('m4','Court 4','3:15 PM')">Court 4 &middot; 3:15 PM</button>
+                      <button class="assign-picker__option" onclick="assignCourtTime('m4','Court 6','3:30 PM')">Court 6 &middot; 3:30 PM (once ready)</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- DELAYED -->
+              <tr id="row-m5">
+                <td class="font-semibold text-slate-800">Dink Dynasty <span class="text-slate-400 font-normal">vs</span> Top Spin Titans</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td>Court 6</td>
+                <td class="tabular">2:30 PM</td>
+                <td><span class="status-badge is-delayed" id="status-m5"><span class="status-badge__dot"></span>Delayed</span></td>
+                <td class="tabular text-slate-400">&ndash;</td>
+                <td class="text-right">
+                  <div class="inline-flex gap-1.5 justify-end">
+                    <button class="btn btn-outline btn-sm">Edit</button>
+                    <button class="btn btn-danger btn-sm">Cancel</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- COMPLETED -->
+              <tr>
+                <td class="font-semibold text-slate-800">Kitchen Crashers <span class="text-slate-400 font-normal">vs</span> Dink or Swim</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td>Court 4</td>
+                <td class="tabular">12:15 PM</td>
+                <td><span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span></td>
+                <td class="tabular font-semibold">11-7, 9-11, 11-6</td>
+                <td class="text-right">
+                  <div class="inline-flex gap-1.5 justify-end">
+                    <button class="btn btn-outline btn-sm">Edit Score</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- COMPLETED, corrected -->
+              <tr>
+                <td class="font-semibold text-slate-800">Smash Sisters <span class="text-slate-400 font-normal">vs</span> Baseline Bandits</td>
+                <td><span class="badge-chip">Pool A</span></td>
+                <td>Court 2</td>
+                <td class="tabular">11:40 AM</td>
+                <td><span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span></td>
+                <td class="tabular font-semibold">11-6, 11-9 <span class="audit-tag" title="Score corrected by D. Alvarez at 12:05 PM">Corrected</span></td>
+                <td class="text-right">
+                  <div class="inline-flex gap-1.5 justify-end">
+                    <button class="btn btn-outline btn-sm">Edit Score</button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- FORFEITED -->
+              <tr>
+                <td class="font-semibold text-slate-800">Rally Rebels <span class="text-slate-400 font-normal">vs</span> Third Shot Divas</td>
+                <td><span class="badge-chip">Pool B</span></td>
+                <td>Court 5</td>
+                <td class="tabular">10:00 AM</td>
+                <td><span class="status-badge is-completed" style="background:var(--pb-red-100);color:var(--pb-red-600);"><span class="status-badge__dot" style="background:var(--pb-red-600);"></span>Forfeit</span></td>
+                <td class="tabular font-semibold">W/O <span class="text-slate-400 font-normal text-xs">(no-show)</span></td>
+                <td class="text-right">
+                  <div class="inline-flex gap-1.5 justify-end">
+                    <button class="btn btn-outline btn-sm">View</button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</div>
+
+<script>
+function togglePicker(id) {
+  document.querySelectorAll('.assign-picker__panel').forEach(function (panel) {
+    if (panel.id !== id) panel.classList.remove('is-open');
+  });
+  document.getElementById(id).classList.toggle('is-open');
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.assign-picker')) {
+    document.querySelectorAll('.assign-picker__panel').forEach(function (p) { p.classList.remove('is-open'); });
+  }
+});
+
+function forceComplete(id) {
+  var row = document.getElementById('row-' + id);
+  row.querySelector('.status-badge').outerHTML = '<span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span>';
+  row.querySelector('td:last-child').innerHTML = '<div class="inline-flex gap-1.5 justify-end"><button class="btn btn-outline btn-sm">Edit Score</button></div>';
+}
+
+function setDelayed(id, reason) {
+  var row = document.getElementById('row-' + id);
+  row.querySelector('.status-badge').outerHTML = '<span class="status-badge is-delayed" title="' + reason + '"><span class="status-badge__dot"></span>Delayed</span>';
+}
+
+function setForfeit(id, winner, reason) {
+  var row = document.getElementById('row-' + id);
+  row.querySelector('.status-badge').outerHTML = '<span class="status-badge is-completed" style="background:var(--pb-red-100);color:var(--pb-red-600);"><span class="status-badge__dot" style="background:var(--pb-red-600);"></span>Forfeit</span>';
+  row.querySelector('td:nth-last-child(2)').innerHTML = 'W/O <span class="text-slate-400 font-normal text-xs">(' + reason.toLowerCase() + ')</span>';
+  row.querySelector('td:last-child').innerHTML = '<div class="inline-flex gap-1.5 justify-end"><button class="btn btn-outline btn-sm">View</button></div>';
+}
+
+function assignCourtTime(id, court, time) {
+  var row = document.getElementById('row-' + id);
+  row.querySelector('td:nth-child(3)').textContent = court;
+  row.querySelector('td:nth-child(4)').innerHTML = time;
+  row.querySelector('td:nth-child(4)').classList.add('tabular');
+  row.querySelector('.status-badge').outerHTML = '<span class="status-badge is-upcoming"><span class="status-badge__dot"></span>Upcoming</span>';
+  row.querySelector('td:last-child').innerHTML = '<div class="inline-flex gap-1.5 justify-end"><button class="btn btn-outline btn-sm">Edit</button><a href="admin-score.html" class="btn btn-primary btn-sm">Start</a></div>';
+}
+</script>
+
+</body>
+</html>

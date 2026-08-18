@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Pools &amp; Schedule Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="admin-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar hidden lg:flex" id="adminSidebar">
+    <div class="flex items-center gap-2.5 px-5 py-5">
+      <span class="pb-nav__brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="leading-tight">
+        <p class="font-display font-bold text-white text-sm">Summer Smash</p>
+        <p class="text-[0.62rem] text-slate-400 uppercase tracking-wider font-bold">Admin Console</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 py-2 space-y-0.5">
+      <a href="admin-dashboard.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a href="admin-matches.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+        Matches
+      </a>
+      <a href="admin-standings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+        Pools &amp; Standings
+      </a>
+      <a href="admin-teams.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M15.5 14.3c2.9.3 5 2.3 5 5.2"/></svg>
+        Teams
+      </a>
+      <a href="admin-schedule.html" class="admin-sidebar__link is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke-linecap="round"/></svg>
+        Courts &amp; Schedule
+      </a>
+      <a href="admin-settings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="px-3 py-4 border-t border-white/10">
+      <div class="flex items-center gap-2.5 px-2 mb-3">
+        <span class="avatar" style="width:34px;height:34px;font-size:0.8rem;background:var(--pb-orange-500);">DA</span>
+        <div class="leading-tight">
+          <p class="text-white text-sm font-semibold">Dana Alvarez</p>
+          <p class="text-[0.68rem] text-slate-400">Tournament Director</p>
+        </div>
+      </div>
+      <a href="admin-login.html" class="admin-sidebar__link !px-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke-linecap="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="flex-1 min-w-0">
+
+    <div class="admin-topbar">
+      <div class="px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden p-2 -ml-2 text-slate-500" onclick="document.getElementById('adminSidebar').classList.toggle('hidden'); document.getElementById('adminSidebar').classList.toggle('flex');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+          </button>
+          <div>
+            <h1 class="font-display font-bold text-lg text-slate-800 leading-tight">Pools &amp; Match Scheduler</h1>
+            <p class="text-xs text-slate-400">Balance pools, then manually schedule each round&rsquo;s matches</p>
+          </div>
+        </div>
+        <a href="index.html" class="btn btn-outline btn-sm hidden sm:inline-flex">View Public Site</a>
+      </div>
+    </div>
+
+    <main class="p-4 sm:p-6 space-y-6">
+
+      <div class="alert-banner is-info">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11.5 11.5h1v5h-1" stroke-linecap="round"/></svg>
+        <span>Aim for <strong>3&ndash;5 teams per pool</strong> on a 1-day event. Matches are <strong>scheduled manually below</strong>, not auto-generated &mdash; the format after pool play depends on field size (e.g. a 16-team draw might run 4 pools of 4 with pool winners advancing into a round-robin championship round, then semis/final), and for other counts that shape may not be decided yet. Add a round for whatever comes next and schedule matches into it as decisions are made.</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button class="btn btn-primary btn-sm" onclick="autoBalance()">Auto-Balance Pools</button>
+        <button class="btn btn-outline btn-sm" onclick="addPool()">+ Add Pool</button>
+      </div>
+
+      <div class="grid lg:grid-cols-4 gap-4">
+        <!-- Unassigned -->
+        <div class="lg:col-span-1">
+          <div class="section-heading"><h2 class="font-display font-bold text-base text-slate-800">Unassigned</h2></div>
+          <div class="pool-card" id="unassignedCard"></div>
+        </div>
+        <!-- Pools -->
+        <div class="lg:col-span-3">
+          <div class="section-heading"><h2 class="font-display font-bold text-base text-slate-800">Pools</h2></div>
+          <div class="grid sm:grid-cols-2 gap-3" id="poolsGrid"></div>
+        </div>
+      </div>
+
+      <!-- Manual match scheduler -->
+      <section>
+        <div class="section-heading">
+          <h2 class="font-display font-bold text-lg text-slate-800">Schedule Matches</h2>
+          <span class="badge-chip" id="stageMatchCount"></span>
+        </div>
+        <p class="text-xs text-slate-400 mb-3">Pick a round, then pick two entrants and schedule the match. Matches land <strong>Unscheduled</strong> &mdash; assign court &amp; time from the Ready Queue on Overview or from Matches.</p>
+
+        <div class="flex items-center gap-2 mb-3 flex-wrap">
+          <div class="flex gap-2 flex-wrap" id="stageTabs"></div>
+          <button class="btn btn-outline btn-sm" onclick="addStage()">+ Add Round / Stage</button>
+        </div>
+
+        <div class="form-panel mb-4">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 items-end">
+            <div class="form-field">
+              <label class="form-label">Entrant A</label>
+              <select class="form-select" id="teamASelect"></select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Entrant B</label>
+              <select class="form-select" id="teamBSelect"></select>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Group / Pool Label <span class="text-slate-400 font-normal">(optional)</span></label>
+              <input type="text" class="form-input" id="matchPoolLabel" placeholder="e.g. Pool A">
+            </div>
+            <button class="btn btn-primary" onclick="addMatch()">+ Schedule Match</button>
+          </div>
+          <div class="mt-3">
+            <label class="form-label !mb-1">Entrant not decided yet? Type a placeholder instead of picking a team above <span class="text-slate-400 font-normal">(e.g. &ldquo;Winner of Pool A&rdquo; for a round whose format isn&rsquo;t finalized)</span></label>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <input type="text" class="form-input" id="customA" placeholder="Custom entrant A (optional)">
+              <input type="text" class="form-input" id="customB" placeholder="Custom entrant B (optional)">
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="admin-table">
+              <thead><tr><th>Match</th><th>Group / Pool</th><th class="text-right">Actions</th></tr></thead>
+              <tbody id="scheduledMatchesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</div>
+
+<script>
+var POOLS = {
+  A: [{name:'Alpha Smashers', seed:1}, {name:'Net Ninjas', seed:2}, {name:'Ace Ventura', seed:3}],
+  B: [{name:'Kitchen Crashers', seed:4}, {name:'Dink or Swim', seed:5}, {name:'Dink Dynasty', seed:6}, {name:'Top Spin Titans', seed:7}],
+  C: [{name:'Smash Sisters', seed:8}, {name:'Baseline Bandits', seed:9}],
+  D: [{name:'Rally Rebels', seed:10}, {name:'Third Shot Divas', seed:11}],
+  E: [{name:'Spin Doctors', seed:12}, {name:'Volley Llamas', seed:13}, {name:'Paddle Battle', seed:14}]
+};
+
+var UNASSIGNED = [
+  {name:'Backspin Bandits', seed:15}, {name:'Paddle Pirates', seed:16}, {name:'Kitchen Queens', seed:17},
+  {name:'Erne Squad', seed:18}, {name:'Two Bounce Rule', seed:19}, {name:'Lob Stars', seed:20}
+];
+
+var STAGE = {
+  order: ['Pool Play', 'Championship Round Robin'],
+  matches: {
+    'Pool Play': [
+      { a: 'Alpha Smashers', b: 'Net Ninjas', pool: 'Pool A' },
+      { a: 'Alpha Smashers', b: 'Ace Ventura', pool: 'Pool A' },
+      { a: 'Kitchen Crashers', b: 'Dink or Swim', pool: 'Pool B' },
+      { a: 'Smash Sisters', b: 'Baseline Bandits', pool: 'Pool C' },
+      { a: 'Spin Doctors', b: 'Volley Llamas', pool: 'Pool E' }
+    ],
+    'Championship Round Robin': []
+  }
+};
+
+var activeStage = STAGE.order[0];
+
+function renderAll() {
+  renderUnassigned();
+  renderPools();
+  renderStageTabs();
+  renderTeamSelects();
+  renderScheduledMatches();
+}
+
+function poolOptionsHtml(excludeKey) {
+  return Object.keys(POOLS).filter(function (k) { return k !== excludeKey; }).map(function (k) {
+    return '<option value="' + k + '">Pool ' + k + '</option>';
+  }).join('');
+}
+
+function renderUnassigned() {
+  var el = document.getElementById('unassignedCard');
+  if (!UNASSIGNED.length) {
+    el.innerHTML = '<p class="text-xs text-slate-400 py-2">All teams assigned to a pool.</p>';
+    return;
+  }
+  el.innerHTML = UNASSIGNED.map(function (t) {
+    return '<div class="pool-team-row"><span class="flex-1">#' + t.seed + ' ' + t.name + '</span>' +
+      '<select class="form-select !py-1 !text-xs !w-auto" onchange="moveTeam(\'' + t.name + '\', \'unassigned\', this.value)">' +
+      '<option value="unassigned" selected>Unassigned</option>' + poolOptionsHtml() + '</select></div>';
+  }).join('');
+}
+
+function renderPools() {
+  var grid = document.getElementById('poolsGrid');
+  var keys = Object.keys(POOLS);
+  if (!keys.length) {
+    grid.innerHTML = '<p class="text-sm text-slate-400">No pools yet &mdash; use &ldquo;+ Add Pool&rdquo; or &ldquo;Auto-Balance Pools&rdquo;.</p>';
+    return;
+  }
+  grid.innerHTML = keys.map(function (poolKey) {
+    var teams = POOLS[poolKey];
+    var rows = teams.map(function (t) {
+      return '<div class="pool-team-row"><span class="flex-1">#' + t.seed + ' ' + t.name + '</span>' +
+        '<select class="form-select !py-1 !text-xs !w-auto" onchange="moveTeam(\'' + t.name + '\', \'' + poolKey + '\', this.value)">' +
+        '<option value="' + poolKey + '" selected>Pool ' + poolKey + '</option>' +
+        poolOptionsHtml(poolKey) +
+        '<option value="unassigned">Unassigned</option></select></div>';
+    }).join('') || '<p class="text-xs text-slate-400 py-2">No teams yet.</p>';
+    return '<div class="pool-card"><div class="pool-card__header"><h3 class="font-display font-bold text-sm text-slate-800">Pool ' + poolKey + '</h3><span class="badge-chip">' + teams.length + ' teams</span></div>' + rows + '</div>';
+  }).join('');
+}
+
+function moveTeam(name, fromKey, toKey) {
+  if (fromKey === toKey) return;
+  var source = fromKey === 'unassigned' ? UNASSIGNED : POOLS[fromKey];
+  var idx = source.findIndex(function (t) { return t.name === name; });
+  if (idx === -1) return;
+  var team = source.splice(idx, 1)[0];
+  if (toKey === 'unassigned') UNASSIGNED.push(team);
+  else POOLS[toKey].push(team);
+  renderAll();
+}
+
+function addPool() {
+  var nextChar = String.fromCharCode(65 + Object.keys(POOLS).length);
+  POOLS[nextChar] = [];
+  renderAll();
+}
+
+function autoBalance() {
+  var allTeams = [];
+  Object.keys(POOLS).forEach(function (k) { allTeams = allTeams.concat(POOLS[k]); });
+  allTeams = allTeams.concat(UNASSIGNED);
+  allTeams.sort(function (a, b) { return a.seed - b.seed; });
+
+  var poolKeys = Object.keys(POOLS);
+  if (!poolKeys.length) {
+    var numPools = Math.max(1, Math.ceil(allTeams.length / 4));
+    poolKeys = [];
+    for (var i = 0; i < numPools; i++) poolKeys.push(String.fromCharCode(65 + i));
+  }
+  var newPools = {};
+  poolKeys.forEach(function (k) { newPools[k] = []; });
+
+  var idx = 0, dir = 1;
+  allTeams.forEach(function (team) {
+    newPools[poolKeys[idx]].push(team);
+    var next = idx + dir;
+    if (next < 0 || next >= poolKeys.length) dir = -dir;
+    else idx = next;
+  });
+
+  POOLS = newPools;
+  UNASSIGNED = [];
+  renderAll();
+}
+
+function renderStageTabs() {
+  var stages = STAGE.order;
+  document.getElementById('stageTabs').innerHTML = stages.map(function (s) {
+    var active = s === activeStage ? ' is-active' : '';
+    return '<button class="pool-tab' + active + '" onclick="setStage(' + JSON.stringify(s) + ')">' + s + '</button>';
+  }).join('');
+}
+
+function setStage(name) {
+  activeStage = name;
+  renderStageTabs();
+  renderScheduledMatches();
+}
+
+function addStage() {
+  var name = prompt('Name this round/stage (e.g. "Championship Round Robin", "Semifinals", "Final"):');
+  if (!name) return;
+  name = name.trim();
+  if (!name) return;
+  if (STAGE.order.indexOf(name) === -1) {
+    STAGE.order.push(name);
+    STAGE.matches[name] = [];
+  }
+  activeStage = name;
+  renderStageTabs();
+  renderScheduledMatches();
+}
+
+function collectTeams() {
+  var list = UNASSIGNED.map(function (t) { return { name: t.name, label: t.name + ' (Unassigned)' }; });
+  Object.keys(POOLS).forEach(function (poolKey) {
+    POOLS[poolKey].forEach(function (t) {
+      list.push({ name: t.name, label: t.name + ' (Pool ' + poolKey + ')' });
+    });
+  });
+  return list;
+}
+
+function renderTeamSelects() {
+  var teams = collectTeams();
+  var options = '<option value="">Select entrant&hellip;</option>' + teams.map(function (t) {
+    return '<option value="' + t.name + '">' + t.label + '</option>';
+  }).join('');
+  document.getElementById('teamASelect').innerHTML = options;
+  document.getElementById('teamBSelect').innerHTML = options;
+}
+
+function addMatch() {
+  var selA = document.getElementById('teamASelect').value;
+  var selB = document.getElementById('teamBSelect').value;
+  var customA = document.getElementById('customA').value.trim();
+  var customB = document.getElementById('customB').value.trim();
+  var a = customA || selA;
+  var b = customB || selB;
+  var poolLabel = document.getElementById('matchPoolLabel').value.trim();
+
+  if (!a || !b) { alert('Select or type both entrants before scheduling the match.'); return; }
+  if (a === b) { alert('Entrants must be different.'); return; }
+
+  STAGE.matches[activeStage].push({ a: a, b: b, pool: poolLabel });
+
+  document.getElementById('teamASelect').value = '';
+  document.getElementById('teamBSelect').value = '';
+  document.getElementById('customA').value = '';
+  document.getElementById('customB').value = '';
+  document.getElementById('matchPoolLabel').value = '';
+  renderScheduledMatches();
+}
+
+function removeMatch(index) {
+  STAGE.matches[activeStage].splice(index, 1);
+  renderScheduledMatches();
+}
+
+function renderScheduledMatches() {
+  var matches = STAGE.matches[activeStage] || [];
+  document.getElementById('stageMatchCount').textContent = matches.length + ' match' + (matches.length === 1 ? '' : 'es') + ' scheduled · ' + activeStage;
+
+  if (!matches.length) {
+    document.getElementById('scheduledMatchesBody').innerHTML = '<tr><td colspan="3" class="text-sm text-slate-400 text-center py-4">No matches scheduled yet for ' + activeStage + '.</td></tr>';
+    return;
+  }
+  document.getElementById('scheduledMatchesBody').innerHTML = matches.map(function (m, i) {
+    return '<tr><td class="font-semibold text-slate-800">' + m.a + ' <span class="text-slate-400 font-normal">vs</span> ' + m.b + '</td>' +
+      '<td>' + (m.pool ? '<span class="badge-chip">' + m.pool + '</span>' : '<span class="text-slate-400">&ndash;</span>') + '</td>' +
+      '<td class="text-right"><button class="btn btn-outline btn-sm" onclick="removeMatch(' + i + ')">Remove</button></td></tr>';
+  }).join('');
+}
+
+renderAll();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Match List — Pickleball Championship 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body class="pb-28">
+
+<header class="pb-nav">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="pb-nav__brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+        </span>
+        <span class="leading-tight">
+          <span class="block font-display font-bold text-base text-slate-800">Summer Smash</span>
+          <span class="block text-[0.65rem] font-semibold text-slate-400 uppercase tracking-wider">Championship 2026</span>
+        </span>
+      </a>
+      <nav class="hidden md:flex items-center gap-7">
+        <a href="index.html" class="pb-nav__link">Dashboard</a>
+        <a href="standings.html" class="pb-nav__link">Standings</a>
+        <a href="matches.html" class="pb-nav__link is-active">Matches</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-3">
+        <span class="live-pill"><span class="live-pill__dot"></span> 2 LIVE NOW</span>
+        <a href="admin-login.html" class="btn btn-outline btn-sm">Admin Login</a>
+      </div>
+      <button class="md:hidden p-2 -mr-2 text-slate-600" onclick="document.getElementById('mobileNav').classList.toggle('is-open')" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileNav" class="pb-nav__mobile-panel md:hidden">
+    <div class="px-4 py-3 flex flex-col gap-1">
+      <a href="index.html" class="pb-nav__link !py-2">Dashboard</a>
+      <a href="standings.html" class="pb-nav__link !py-2">Standings</a>
+      <a href="matches.html" class="pb-nav__link is-active !py-2">Matches</a>
+      <a href="admin-login.html" class="pb-nav__link !py-2">Admin Login</a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+
+  <div>
+    <h1 class="font-display font-bold text-2xl sm:text-3xl text-slate-800">Match List</h1>
+    <p class="text-slate-400 text-sm mt-1">Saturday, Aug 22 &middot; 42 matches scheduled</p>
+  </div>
+
+  <!-- Search + filters -->
+  <div class="space-y-3">
+    <div class="relative">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>
+      <input type="text" placeholder="Search by team name..." class="w-full sm:w-96 pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500">
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <button class="filter-chip is-active" onclick="setFilter(this,'status','all')">All Status</button>
+      <button class="filter-chip" onclick="setFilter(this,'status','live')">Live</button>
+      <button class="filter-chip" onclick="setFilter(this,'status','upcoming')">Upcoming</button>
+      <button class="filter-chip" onclick="setFilter(this,'status','completed')">Completed</button>
+    </div>
+  </div>
+
+  <!-- ============ 1:45 PM ============ -->
+  <div>
+    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">1:45 PM &mdash; In Progress</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="match-detail.html" class="match-card is-live">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 1 &middot; Pool A</span>
+          <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Alpha Smashers</span><span class="match-card__score">11&nbsp;&nbsp;7</span></div>
+        <div class="match-card__row"><span class="match-card__team">Net Ninjas</span><span class="match-card__score">9&nbsp;&nbsp;5</span></div>
+        <div class="match-card__footer"><span>Game 2 of 3</span><span class="font-semibold text-orange-600">Alpha serving</span></div>
+      </a>
+      <a href="match-detail.html" class="match-card is-live">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 2 &middot; Pool B</span>
+          <span class="status-badge is-live"><span class="status-badge__dot"></span>Live</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Spin Doctors</span><span class="match-card__score">8</span></div>
+        <div class="match-card__row"><span class="match-card__team">Smash Sisters</span><span class="match-card__score">6</span></div>
+        <div class="match-card__footer"><span>Game 1 of 3</span><span class="font-semibold text-orange-600">Spin Doctors serving</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ 2:30 PM ============ -->
+  <div>
+    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">2:30 PM</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 3 &middot; Pool A</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>Upcoming</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Ace Ventura</span></div>
+        <div class="match-card__row"><span class="match-card__team">Volley Llamas</span></div>
+        <div class="match-card__footer"><span>Round 3</span><span>Best of 3 to 11</span></div>
+      </a>
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 6 &middot; Pool B</span>
+          <span class="status-badge is-delayed"><span class="status-badge__dot"></span>Delayed</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Dink Dynasty</span></div>
+        <div class="match-card__row"><span class="match-card__team">Top Spin Titans</span></div>
+        <div class="match-card__footer"><span>Round 3</span><span>Court resurfacing, ~15 min</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ 3:00 PM ============ -->
+  <div>
+    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">3:00 PM</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 5 &middot; Pool C</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>Upcoming</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Paddle Battle</span></div>
+        <div class="match-card__row"><span class="match-card__team">Third Shot Divas</span></div>
+        <div class="match-card__footer"><span>Round 3</span><span>Best of 3 to 11</span></div>
+      </a>
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 4 &middot; Pool B</span>
+          <span class="status-badge is-upcoming"><span class="status-badge__dot"></span>Upcoming</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team">Set Point Squad</span></div>
+        <div class="match-card__row"><span class="match-card__team">Rally Royals</span></div>
+        <div class="match-card__footer"><span>Round 3</span><span>Best of 3 to 11</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ 12:15 PM — Completed ============ -->
+  <div>
+    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">12:15 PM &mdash; Completed</h3>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 4 &middot; Pool B</span>
+          <span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team is-winner">Kitchen Crashers</span><span class="match-card__score is-winner">2</span></div>
+        <div class="match-card__row"><span class="match-card__team">Dink or Swim</span><span class="match-card__score">1</span></div>
+        <div class="match-card__footer"><span>11-7, 9-11, 11-6</span></div>
+      </a>
+      <a href="match-detail.html" class="match-card">
+        <div class="match-card__meta">
+          <span class="match-card__court">Court 2 &middot; Pool A</span>
+          <span class="status-badge is-completed"><span class="status-badge__dot"></span>Final</span>
+        </div>
+        <div class="match-card__row"><span class="match-card__team is-winner">Ace Ventura</span><span class="match-card__score is-winner">2</span></div>
+        <div class="match-card__row"><span class="match-card__team">Net Ninjas</span><span class="match-card__score">0</span></div>
+        <div class="match-card__footer"><span>11-4, 11-6</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ============ Empty state example ============ -->
+  <div class="text-center py-12 border border-dashed border-slate-200 rounded-2xl hidden" id="emptyState">
+    <svg class="mx-auto text-slate-300 mb-3" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>
+    <p class="font-semibold text-slate-500">No matches match your filters</p>
+    <p class="text-sm text-slate-400 mt-1">Try clearing a filter or searching a different team name.</p>
+  </div>
+
+</main>
+
+<footer class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-4 border-t border-slate-200 text-sm text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+  <span>&copy; 2026 Summer Smash Pickleball Championship</span>
+  <a href="admin-login.html" class="font-semibold text-slate-500 hover:text-teal-700">Tournament Staff Login</a>
+</footer>
+
+<nav class="pb-tabbar">
+  <a href="index.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Dashboard
+  </a>
+  <a href="standings.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+    Standings
+  </a>
+  <a href="matches.html" class="pb-tabbar__item is-active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+    Matches
+  </a>
+  <a href="team.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke-linecap="round"/></svg>
+    Teams
+  </a>
+</nav>
+
+<script>
+  // Purely visual filter-chip toggle (single-select within its own row) — static design, no real filtering logic
+  function setFilter(btn, group, value) {
+    const row = btn.parentElement;
+    row.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('is-active'));
+    btn.classList.add('is-active');
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+mAWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  Pickleball app - Infra stack (VPC, ALB, ECS cluster, ECR, S3, CloudFront,
+  RDS PostgreSQL, Secrets Manager, IAM/OIDC). Run this manually via the
+  CloudFormation console. See DEPLOYMENT.md for prepare/verify steps.
+
+Parameters:
+  GitHubRepo:
+    Type: String
+    Description: "GitHub owner/repo allowed to assume the deploy role via OIDC, e.g. myuser/pickleball"
+  AppStackName:
+    Type: String
+    Default: pickleball-app
+    Description: "Name the Application stack will be deployed under (used to scope the CI deploy role)"
+  DBMasterUsername:
+    Type: String
+    Default: pickleball_admin
+  DBEngineVersion:
+    Type: String
+    Default: "16.6"
+    Description: "PostgreSQL version for the RDS instance. Check availability in your target region (RDS console -> Create database -> engine version dropdown) before deploying."
+  DBInstanceClass:
+    Type: String
+    Default: db.t3.micro
+    Description: "Must be db.t3.micro or db.t4g.micro to stay within the AWS Free Tier (750 instance-hours/month combined across all RDS instances on the account, for 12 months from account creation)."
+  JwtSecretValue:
+    Type: String
+    NoEcho: true
+    Description: "Long random string used to sign JWTs"
+  AdminIngressCidr:
+    Type: String
+    Default: ""
+    Description: "Optional: your IP as x.x.x.x/32, temporarily allowed to reach the DB directly (e.g. to load schema/seed SQL). Leave blank for none."
+  ContainerPort:
+    Type: Number
+    Default: 8000
+
+Conditions:
+  HasAdminIngress: !Not [!Equals [!Ref AdminIngressCidr, ""]]
+
+Resources:
+  # ---------- Networking (public subnets only, no NAT) ----------
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.20.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags: [{Key: Name, Value: pickleball-vpc}]
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.20.0.0/24
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      MapPublicIpOnLaunch: true
+      Tags: [{Key: Name, Value: pickleball-public-a}]
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.20.1.0/24
+      AvailabilityZone: !Select [1, !GetAZs ""]
+      MapPublicIpOnLaunch: true
+      Tags: [{Key: Name, Value: pickleball-public-b}]
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  PublicSubnetARouteAssoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PublicSubnetA, RouteTableId: !Ref PublicRouteTable}
+  PublicSubnetBRouteAssoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: {SubnetId: !Ref PublicSubnetB, RouteTableId: !Ref PublicRouteTable}
+
+  # ---------- Security groups ----------
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: ALB - public HTTP ingress (fronted by CloudFront)
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 80, ToPort: 80, CidrIp: 0.0.0.0/0}
+      SecurityGroupEgress:
+        - {IpProtocol: "-1", CidrIp: 0.0.0.0/0}
+
+  FargateSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Backend Fargate tasks - ingress from ALB only
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: !Ref ContainerPort, ToPort: !Ref ContainerPort, SourceSecurityGroupId: !Ref ALBSecurityGroup}
+      SecurityGroupEgress:
+        - {IpProtocol: "-1", CidrIp: 0.0.0.0/0}
+
+  DBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: RDS PostgreSQL - ingress from Fargate tasks (and optionally one admin IP)
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - {IpProtocol: tcp, FromPort: 5432, ToPort: 5432, SourceSecurityGroupId: !Ref FargateSecurityGroup}
+
+  DBAdminIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Condition: HasAdminIngress
+    Properties:
+      GroupId: !Ref DBSecurityGroup
+      IpProtocol: tcp
+      FromPort: 5432
+      ToPort: 5432
+      CidrIp: !Ref AdminIngressCidr
+
+  # ---------- ALB ----------
+  ALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Scheme: internet-facing
+      Type: application
+      Subnets: [!Ref PublicSubnetA, !Ref PublicSubnetB]
+      SecurityGroups: [!Ref ALBSecurityGroup]
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !Ref VPC
+      Port: !Ref ContainerPort
+      Protocol: HTTP
+      TargetType: ip
+      HealthCheckPath: /health
+      HealthCheckIntervalSeconds: 30
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref ALB
+      Port: 80
+      Protocol: HTTP
+      DefaultActions:
+        - {Type: forward, TargetGroupArn: !Ref TargetGroup}
+
+  # ---------- ECS / ECR ----------
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: pickleball-cluster
+      CapacityProviders: [FARGATE]
+
+  ECRRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: pickleball-backend
+      ImageScanningConfiguration: {ScanOnPush: true}
+
+  BackendLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/pickleball-backend
+      RetentionInDays: 14
+
+  # ---------- S3 + CloudFront ----------
+  FrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  CloudFrontOAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: pickleball-frontend-oac
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        HttpVersion: http2
+        PriceClass: PriceClass_100
+        DefaultRootObject: index.html
+        Origins:
+          - Id: S3Origin
+            DomainName: !GetAtt FrontendBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt CloudFrontOAC.Id
+            S3OriginConfig: {OriginAccessIdentity: ""}
+          - Id: ALBOrigin
+            DomainName: !GetAtt ALB.DNSName
+            CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+              HTTPPort: 80
+              HTTPSPort: 443
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          Compress: true
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # Managed-CachingOptimized
+        CacheBehaviors:
+          - PathPattern: /api/*
+            TargetOriginId: ALBOrigin
+            ViewerProtocolPolicy: https-only
+            AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # Managed-CachingDisabled
+            OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac # Managed-AllViewerExceptHostHeader
+          - PathPattern: /socket.io/*
+            TargetOriginId: ALBOrigin
+            ViewerProtocolPolicy: https-only
+            AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+            OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac
+        CustomErrorResponses:
+          - {ErrorCode: 403, ResponseCode: 200, ResponsePagePath: /index.html, ErrorCachingMinTTL: 10}
+          - {ErrorCode: 404, ResponseCode: 200, ResponsePagePath: /index.html, ErrorCachingMinTTL: 10}
+
+  FrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref FrontendBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: {Service: cloudfront.amazonaws.com}
+            Action: s3:GetObject
+            Resource: !Sub "${FrontendBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
+
+  # ---------- RDS PostgreSQL (Free Tier: db.t3/t4g.micro, 20GB, single-AZ) ----------
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: RDS subnet group (public subnets, no NAT)
+      SubnetIds: [!Ref PublicSubnetA, !Ref PublicSubnetB]
+
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      Engine: postgres
+      EngineVersion: !Ref DBEngineVersion
+      DBInstanceClass: !Ref DBInstanceClass
+      AllocatedStorage: "20"
+      StorageType: gp2
+      MultiAZ: false
+      DBName: pickleball
+      MasterUsername: !Ref DBMasterUsername
+      ManageMasterUserPassword: true
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VPCSecurityGroups: [!Ref DBSecurityGroup]
+      StorageEncrypted: true
+      BackupRetentionPeriod: 1
+      PubliclyAccessible: true
+
+  JwtSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: pickleball/jwt-secret
+      SecretString: !Ref JwtSecretValue
+
+  # ---------- IAM (all roles live here so deleting Infra+App fully cleans up) ----------
+  ECSTaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - {Effect: Allow, Principal: {Service: ecs-tasks.amazonaws.com}, Action: sts:AssumeRole}
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Policies:
+        - PolicyName: ReadDeploymentSecrets
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: secretsmanager:GetSecretValue
+                Resource:
+                  - !GetAtt DBInstance.MasterUserSecret.SecretArn
+                  - !Ref JwtSecret
+
+  ECSTaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - {Effect: Allow, Principal: {Service: ecs-tasks.amazonaws.com}, Action: sts:AssumeRole}
+
+  GitHubOIDCProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList: ["sts.amazonaws.com"]
+      ThumbprintList: ["6938fd4d98bab03faadb97b34396831e3780aea1"]
+
+  GitHubDeployRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: {Federated: !Ref GitHubOIDCProvider}
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals: {"token.actions.githubusercontent.com:aud": "sts.amazonaws.com"}
+              StringLike: {"token.actions.githubusercontent.com:sub": !Sub "repo:${GitHubRepo}:*"}
+      Policies:
+        - PolicyName: CIDeployPermissions
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: "*"
+              - Effect: Allow
+                Action: [ecr:BatchCheckLayerAvailability, ecr:PutImage, ecr:InitiateLayerUpload, ecr:UploadLayerPart, ecr:CompleteLayerUpload, ecr:BatchGetImage, ecr:GetDownloadUrlForLayer]
+                Resource: !GetAtt ECRRepository.Arn
+              - Effect: Allow
+                Action: [cloudformation:CreateStack, cloudformation:UpdateStack, cloudformation:DescribeStacks, cloudformation:DescribeStackEvents, cloudformation:GetTemplate, cloudformation:ListStackResources]
+                Resource: !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${AppStackName}/*"
+              - Effect: Allow
+                Action: [ecs:RegisterTaskDefinition, ecs:DescribeTaskDefinition]
+                Resource: "*"
+              - Effect: Allow
+                Action: [ecs:UpdateService, ecs:DescribeServices]
+                Resource: !Sub "arn:aws:ecs:${AWS::Region}:${AWS::AccountId}:service/pickleball-cluster/*"
+              - Effect: Allow
+                Action: iam:PassRole
+                Resource: [!GetAtt ECSTaskExecutionRole.Arn, !GetAtt ECSTaskRole.Arn]
+              - Effect: Allow
+                Action: [s3:PutObject, s3:DeleteObject, s3:ListBucket]
+                Resource: [!GetAtt FrontendBucket.Arn, !Sub "${FrontendBucket.Arn}/*"]
+              - Effect: Allow
+                Action: cloudfront:CreateInvalidation
+                Resource: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
+
+Outputs:
+  VpcId: {Value: !Ref VPC, Export: {Name: !Sub "${AWS::StackName}-VpcId"}}
+  PublicSubnetA: {Value: !Ref PublicSubnetA, Export: {Name: !Sub "${AWS::StackName}-PublicSubnetA"}}
+  PublicSubnetB: {Value: !Ref PublicSubnetB, Export: {Name: !Sub "${AWS::StackName}-PublicSubnetB"}}
+  FargateSecurityGroupId: {Value: !Ref FargateSecurityGroup, Export: {Name: !Sub "${AWS::StackName}-FargateSecurityGroupId"}}
+  ECSClusterName: {Value: !Ref ECSCluster, Export: {Name: !Sub "${AWS::StackName}-ECSClusterName"}}
+  ECRRepositoryUri: {Value: !GetAtt ECRRepository.RepositoryUri, Export: {Name: !Sub "${AWS::StackName}-ECRRepositoryUri"}}
+  ALBListenerArn: {Value: !Ref ALBListener, Export: {Name: !Sub "${AWS::StackName}-ALBListenerArn"}}
+  TargetGroupArn: {Value: !Ref TargetGroup, Export: {Name: !Sub "${AWS::StackName}-TargetGroupArn"}}
+  CloudFrontDomainName: {Value: !GetAtt CloudFrontDistribution.DomainName, Export: {Name: !Sub "${AWS::StackName}-CloudFrontDomainName"}}
+  CloudFrontDistributionId: {Value: !Ref CloudFrontDistribution, Export: {Name: !Sub "${AWS::StackName}-CloudFrontDistributionId"}}
+  FrontendBucketName: {Value: !Ref FrontendBucket, Export: {Name: !Sub "${AWS::StackName}-FrontendBucketName"}}
+  DBInstanceEndpoint: {Value: !GetAtt DBInstance.Endpoint.Address, Export: {Name: !Sub "${AWS::StackName}-DBInstanceEndpoint"}}
+  DBSecretArn: {Value: !GetAtt DBInstance.MasterUserSecret.SecretArn, Export: {Name: !Sub "${AWS::StackName}-DBSecretArn"}}
+  JwtSecretArn: {Value: !Ref JwtSecret, Export: {Name: !Sub "${AWS::StackName}-JwtSecretArn"}}
+  ECSTaskExecutionRoleArn: {Value: !GetAtt ECSTaskExecutionRole.Arn, Export: {Name: !Sub "${AWS::StackName}-ECSTaskExecutionRoleArn"}}
+  ECSTaskRoleArn: {Value: !GetAtt ECSTaskRole.Arn, Export: {Name: !Sub "${AWS::StackName}-ECSTaskRoleArn"}}
+  BackendLogGroupName: {Value: !Ref BackendLogGroup, Export: {Name: !Sub "${AWS::StackName}-BackendLogGroupName"}}
+  GitHubDeployRoleArn: {Value: !GetAtt GitHubDeployRole.Arn, Description: "Put this in the GitHub repo as AWS_DEPLOY_ROLE_ARN"}

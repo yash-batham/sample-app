@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standings — Pickleball Championship 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body class="pb-28">
+
+<!-- ============ PUBLIC TOP NAV ============ -->
+<header class="pb-nav">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-center justify-between h-16">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="pb-nav__brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+        </span>
+        <span class="leading-tight">
+          <span class="block font-display font-bold text-base text-slate-800">Summer Smash</span>
+          <span class="block text-[0.65rem] font-semibold text-slate-400 uppercase tracking-wider">Championship 2026</span>
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7">
+        <a href="index.html" class="pb-nav__link">Dashboard</a>
+        <a href="standings.html" class="pb-nav__link is-active">Standings</a>
+        <a href="matches.html" class="pb-nav__link">Matches</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-3">
+        <span class="live-pill"><span class="live-pill__dot"></span> 2 LIVE NOW</span>
+        <a href="admin-login.html" class="btn btn-outline btn-sm">Admin Login</a>
+      </div>
+
+      <button class="md:hidden p-2 -mr-2 text-slate-600" onclick="document.getElementById('mobileNav').classList.toggle('is-open')" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileNav" class="pb-nav__mobile-panel md:hidden">
+    <div class="px-4 py-3 flex flex-col gap-1">
+      <a href="index.html" class="pb-nav__link !py-2">Dashboard</a>
+      <a href="standings.html" class="pb-nav__link is-active !py-2">Standings</a>
+      <a href="matches.html" class="pb-nav__link !py-2">Matches</a>
+      <a href="admin-login.html" class="pb-nav__link !py-2">Admin Login</a>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+
+  <div>
+    <h1 class="font-display font-bold text-2xl sm:text-3xl text-slate-800">Pools &amp; Standings</h1>
+    <p class="text-slate-400 text-sm mt-1">Top 2 teams in each pool advance to the championship bracket.</p>
+  </div>
+
+  <!-- Pool tabs -->
+  <div class="flex gap-2 overflow-x-auto scroll-rail" id="poolTabs">
+    <button class="pool-tab is-active" data-pool="A" onclick="setPool('A')">Pool A</button>
+    <button class="pool-tab" data-pool="B" onclick="setPool('B')">Pool B</button>
+    <button class="pool-tab" data-pool="C" onclick="setPool('C')">Pool C</button>
+    <button class="pool-tab" data-pool="D" onclick="setPool('D')">Pool D</button>
+    <button class="pool-tab" data-pool="E" onclick="setPool('E')">Pool E</button>
+    <button class="pool-tab" data-pool="F" onclick="setPool('F')">Pool F</button>
+  </div>
+
+  <!-- Standings table card -->
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="standings-table" id="standingsTable">
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Team</th>
+            <th class="num">W&ndash;L</th>
+            <th class="num">Games</th>
+            <th class="num">Pt Diff</th>
+            <th class="num">Pts</th>
+          </tr>
+        </thead>
+        <tbody id="standingsBody">
+          <!-- populated by JS from sample data below -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-4 text-xs text-slate-400 flex-wrap">
+    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm inline-block" style="background:var(--pb-teal-50); border:1px solid var(--pb-teal-500);"></span> Qualifies for bracket</span>
+    <span>W&ndash;L = Match Wins&ndash;Losses</span>
+    <span>Games = Individual Games Won&ndash;Lost</span>
+    <span>Pt Diff = Total Points Scored minus Allowed</span>
+  </div>
+
+</main>
+
+<footer class="max-w-6xl mx-auto px-4 sm:px-6 py-8 mt-4 border-t border-slate-200 text-sm text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+  <span>&copy; 2026 Summer Smash Pickleball Championship</span>
+  <a href="admin-login.html" class="font-semibold text-slate-500 hover:text-teal-700">Tournament Staff Login</a>
+</footer>
+
+<nav class="pb-tabbar">
+  <a href="index.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8M5 10v10h14V10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Dashboard
+  </a>
+  <a href="standings.html" class="pb-tabbar__item is-active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+    Standings
+  </a>
+  <a href="matches.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+    Matches
+  </a>
+  <a href="team.html" class="pb-tabbar__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke-linecap="round"/></svg>
+    Teams
+  </a>
+</nav>
+
+<script>
+  // Sample standings data (static design only — no backend)
+  const STANDINGS = {
+    A: [
+      ['Alpha Smashers','4-0','8-2','+31','8'],
+      ['Kitchen Crashers','3-1','7-3','+14','6'],
+      ['Ace Ventura','2-2','5-5','+2','4'],
+      ['Net Ninjas','1-3','3-7','-15','2'],
+      ['Baseline Bandits','0-4','1-8','-32','0'],
+    ],
+    B: [
+      ['Dink Dynasty','4-0','8-1','+29','8'],
+      ['Top Spin Titans','3-1','6-4','+11','6'],
+      ['Rally Renegades','2-2','5-5','0','4'],
+      ['Volley Llamas','1-3','3-6','-9','2'],
+      ["Serve & Protect",'0-4','2-8','-31','0'],
+    ],
+    C: [
+      ['Smash Sisters','4-0','8-1','+27','8'],
+      ['Third Shot Divas','3-1','7-4','+9','6'],
+      ['Dink or Swim','2-2','5-5','+3','4'],
+      ['Spin Doctors','1-3','4-7','-8','2'],
+      ['Lob Stars','0-4','1-8','-31','0'],
+    ],
+    D: [
+      ['Paddle Battle','3-1','7-3','+18','6'],
+      ['Kitchen Queens','3-1','6-4','+12','6'],
+      ['Net Gains','2-2','5-5','-1','4'],
+      ['Ace Aces','1-3','3-7','-10','2'],
+      ['Backspin Belles','1-3','3-7','-19','2'],
+    ],
+    E: [
+      ['Power Couple','4-0','8-0','+34','8'],
+      ['Doubles Trouble','3-1','6-3','+13','6'],
+      ['Mixed Mayhem','2-2','5-5','+1','4'],
+      ['Dynamic Dinkers','1-3','3-6','-12','2'],
+      ['Court Jesters','0-4','2-8','-36','0'],
+    ],
+    F: [
+      ['Set Point Squad','3-1','7-2','+21','6'],
+      ['Match Point Mates','3-1','6-3','+8','6'],
+      ['Paddle Pals','2-2','4-5','-2','4'],
+      ['Rally Royals','1-3','3-7','-11','2'],
+      ['Net Newlyweds','1-3','2-7','-16','2'],
+    ],
+  };
+
+  let currentPool = 'A';
+
+  function render() {
+    const rows = STANDINGS[currentPool];
+    const body = document.getElementById('standingsBody');
+    body.innerHTML = rows.map((r, i) => `
+      <tr class="${i < 2 ? 'is-qualifying' : ''}">
+        <td class="num rank-num">${i + 1}</td>
+        <td class="font-semibold text-slate-800">${r[0]}</td>
+        <td class="num tabular">${r[1]}</td>
+        <td class="num tabular">${r[2]}</td>
+        <td class="num tabular">${r[3]}</td>
+        <td class="num tabular font-bold text-teal-700">${r[4]}</td>
+      </tr>
+    `).join('');
+  }
+
+  function setPool(pool) {
+    currentPool = pool;
+    document.querySelectorAll('#poolTabs .pool-tab').forEach(b => b.classList.toggle('is-active', b.dataset.pool === pool));
+    render();
+  }
+
+  render();
+</script>
+
+</body>
+</html>

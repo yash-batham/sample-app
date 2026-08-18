@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Summer Smash Pickleball Championship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4" style="background: radial-gradient(circle at 20% 20%, var(--pb-teal-700), var(--pb-blue-900) 60%);">
+
+  <div class="w-full max-w-md">
+
+    <div class="flex flex-col items-center mb-6 text-white">
+      <span class="pb-nav__brand-mark mb-3" style="width:52px;height:52px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+      </span>
+      <p class="font-display font-bold text-lg">PickleBall</p>
+      <p class="text-xs uppercase tracking-widest text-teal-200 font-bold">Tournament Staff Access</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-7 sm:p-8">
+      <h1 class="font-display font-bold text-2xl text-slate-800 mb-1">Admin Login</h1>
+      <p class="text-sm text-slate-400 mb-6">Sign in to manage matches, pools, and live scoring.</p>
+
+      <form class="space-y-4" onsubmit="window.location.href='admin-dashboard.html'; return false;">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-1.5">Email or Staff ID</label>
+          <input type="text" placeholder="you@tournamentstaff.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500">
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-1.5">Password</label>
+          <div class="relative">
+            <input type="password" placeholder="••••••••" value="••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500">
+            <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-sm pt-1">
+          <label class="flex items-center gap-2 text-slate-500">
+            <input type="checkbox" class="rounded border-slate-300 text-teal-600 focus:ring-teal-500" checked>
+            Remember me
+          </label>
+          <a href="#" class="font-semibold text-teal-700 hover:underline">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full !py-2.5 !text-sm">Sign In</button>
+      </form>
+
+      <p class="text-xs text-slate-400 text-center mt-6">Demo UI only &mdash; no authentication is performed.</p>
+    </div>
+
+    <p class="text-center text-white/70 text-sm mt-6">
+      <a href="index.html" class="font-semibold text-white hover:underline">&larr; Back to public site</a>
+    </p>
+  </div>
+
+</body>
+</html>

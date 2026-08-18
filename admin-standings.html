@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Standings &amp; Bracket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="admin-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar hidden lg:flex" id="adminSidebar">
+    <div class="flex items-center gap-2.5 px-5 py-5">
+      <span class="pb-nav__brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="leading-tight">
+        <p class="font-display font-bold text-white text-sm">Summer Smash</p>
+        <p class="text-[0.62rem] text-slate-400 uppercase tracking-wider font-bold">Admin Console</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 py-2 space-y-0.5">
+      <a href="admin-dashboard.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a href="admin-matches.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+        Matches
+      </a>
+      <a href="admin-standings.html" class="admin-sidebar__link is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+        Pools &amp; Standings
+      </a>
+      <a href="admin-teams.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M15.5 14.3c2.9.3 5 2.3 5 5.2"/></svg>
+        Teams
+      </a>
+      <a href="admin-schedule.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke-linecap="round"/></svg>
+        Courts &amp; Schedule
+      </a>
+      <a href="admin-settings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="px-3 py-4 border-t border-white/10">
+      <div class="flex items-center gap-2.5 px-2 mb-3">
+        <span class="avatar" style="width:34px;height:34px;font-size:0.8rem;background:var(--pb-orange-500);">DA</span>
+        <div class="leading-tight">
+          <p class="text-white text-sm font-semibold">Dana Alvarez</p>
+          <p class="text-[0.68rem] text-slate-400">Tournament Director</p>
+        </div>
+      </div>
+      <a href="admin-login.html" class="admin-sidebar__link !px-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke-linecap="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="flex-1 min-w-0">
+
+    <div class="admin-topbar">
+      <div class="px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden p-2 -ml-2 text-slate-500" onclick="document.getElementById('adminSidebar').classList.toggle('hidden'); document.getElementById('adminSidebar').classList.toggle('flex');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+          </button>
+          <div>
+            <h1 class="font-display font-bold text-lg text-slate-800 leading-tight">Pools &amp; Standings</h1>
+            <p class="text-xs text-slate-400">Track pool progress and advance to bracket play</p>
+          </div>
+        </div>
+        <a href="index.html" class="btn btn-outline btn-sm hidden sm:inline-flex">View Public Site</a>
+      </div>
+    </div>
+
+    <main class="p-4 sm:p-6 space-y-5">
+
+      <div class="flex items-center gap-2">
+        <button class="btn btn-sm" id="viewBtnStandings" onclick="setView('standings')">Pool Standings</button>
+        <button class="btn btn-sm" id="viewBtnBracket" onclick="setView('bracket')">Bracket</button>
+      </div>
+
+      <!-- ============ STANDINGS VIEW ============ -->
+      <div id="standingsView">
+        <div class="flex gap-2 mb-2" id="poolTabs"></div>
+        <div class="flex items-center justify-between mb-3">
+          <span class="badge-chip" id="poolProgress"></span>
+          <button class="btn btn-accent btn-sm" id="generateBracketBtn" onclick="generateBracket()">Generate Bracket</button>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="admin-table" id="standingsTable">
+              <thead>
+                <tr>
+                  <th>#</th><th>Team</th><th>W</th><th>L</th><th>PF</th><th>PA</th><th>Diff</th><th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="standingsBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Tiebreakers, in order: head-to-head result, then point differential, then total points scored.</p>
+      </div>
+
+      <!-- ============ BRACKET VIEW ============ -->
+      <div class="hidden" id="bracketView">
+        <div id="bracketEmpty" class="text-center py-12 text-slate-400 text-sm">
+          No bracket generated yet.<br>Complete pool play, then use &ldquo;Generate Bracket&rdquo; from the Standings tab.
+        </div>
+        <div class="overflow-x-auto hidden" id="bracketTreeWrap">
+          <div class="flex items-start gap-6 min-w-max py-4" id="bracketTree"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</div>
+
+<script>
+var POOLS = {
+  A: { totalMatches: 3, completedMatches: 3, teams: [
+    { name: 'Alpha Smashers', w: 2, l: 0, pf: 22, pa: 14 },
+    { name: 'Ace Ventura', w: 1, l: 1, pf: 20, pa: 19 },
+    { name: 'Net Ninjas', w: 0, l: 2, pf: 14, pa: 23 }
+  ] },
+  B: { totalMatches: 6, completedMatches: 6, teams: [
+    { name: 'Kitchen Crashers', w: 3, l: 0, pf: 33, pa: 20 },
+    { name: 'Dink or Swim', w: 2, l: 1, pf: 30, pa: 27 },
+    { name: 'Dink Dynasty', w: 1, l: 2, pf: 24, pa: 29 },
+    { name: 'Top Spin Titans', w: 0, l: 3, pf: 19, pa: 30 }
+  ] },
+  C: { totalMatches: 1, completedMatches: 1, teams: [
+    { name: 'Smash Sisters', w: 1, l: 0, pf: 22, pa: 14 },
+    { name: 'Baseline Bandits', w: 0, l: 1, pf: 14, pa: 22 }
+  ] },
+  D: { totalMatches: 1, completedMatches: 0, teams: [
+    { name: 'Rally Rebels', w: 0, l: 0, pf: 0, pa: 0 },
+    { name: 'Third Shot Divas', w: 0, l: 0, pf: 0, pa: 0 }
+  ] },
+  E: { totalMatches: 3, completedMatches: 1, teams: [
+    { name: 'Spin Doctors', w: 1, l: 0, pf: 11, pa: 6 },
+    { name: 'Volley Llamas', w: 0, l: 0, pf: 0, pa: 0 },
+    { name: 'Paddle Battle', w: 0, l: 1, pf: 6, pa: 11 }
+  ] }
+};
+
+var activePool = 'A';
+var activeView = 'standings';
+var bracket = null; // generated bracket, once seeded
+
+function sortedTeams(teams) {
+  return teams.slice().sort(function (a, b) {
+    if (b.w !== a.w) return b.w - a.w;
+    return (b.pf - b.pa) - (a.pf - a.pa);
+  });
+}
+
+function poolsComplete() {
+  return Object.keys(POOLS).every(function (k) { return POOLS[k].completedMatches === POOLS[k].totalMatches; });
+}
+
+function setView(view) {
+  activeView = view;
+  document.getElementById('standingsView').classList.toggle('hidden', view !== 'standings');
+  document.getElementById('bracketView').classList.toggle('hidden', view !== 'bracket');
+  document.getElementById('viewBtnStandings').className = 'btn btn-sm ' + (view === 'standings' ? 'btn-primary' : 'btn-outline');
+  document.getElementById('viewBtnBracket').className = 'btn btn-sm ' + (view === 'bracket' ? 'btn-primary' : 'btn-outline');
+  renderBracketView();
+}
+
+function setPool(key) {
+  activePool = key;
+  renderStandingsTable();
+}
+
+function renderTabs() {
+  var poolTabs = document.getElementById('poolTabs');
+  poolTabs.innerHTML = Object.keys(POOLS).map(function (key) {
+    var active = key === activePool ? ' is-active' : '';
+    return '<button class="pool-tab' + active + '" onclick="setPool(\'' + key + '\')">Pool ' + key + '</button>';
+  }).join('');
+}
+
+function renderStandingsTable() {
+  var pool = POOLS[activePool];
+  var teams = sortedTeams(pool.teams);
+  document.getElementById('poolProgress').textContent = 'Pool ' + activePool + ' progress: ' + pool.completedMatches + '/' + pool.totalMatches + ' matches complete';
+
+  document.getElementById('standingsBody').innerHTML = teams.map(function (t, i) {
+    var diff = t.pf - t.pa;
+    var qualifying = i < 2 ? ' is-qualifying' : '';
+    var note = '';
+    if (i > 0 && teams[i - 1].w === t.w && (teams[i - 1].pf - teams[i - 1].pa) === diff) {
+      note = '<span class="audit-tag">Tiebreak: H2H</span>';
+    }
+    return '<tr class="' + qualifying.trim() + '">' +
+      '<td class="tabular font-semibold">' + (i + 1) + '</td>' +
+      '<td class="font-semibold text-slate-800">' + t.name + '</td>' +
+      '<td class="tabular">' + t.w + '</td>' +
+      '<td class="tabular">' + t.l + '</td>' +
+      '<td class="tabular">' + t.pf + '</td>' +
+      '<td class="tabular">' + t.pa + '</td>' +
+      '<td class="tabular font-semibold ' + (diff >= 0 ? 'text-teal-700' : 'text-red-500') + '">' + (diff >= 0 ? '+' : '') + diff + '</td>' +
+      '<td>' + note + '</td>' +
+      '</tr>';
+  }).join('');
+
+  var btn = document.getElementById('generateBracketBtn');
+  var complete = poolsComplete();
+  btn.disabled = !complete;
+  btn.classList.toggle('opacity-40', !complete);
+  btn.title = complete ? 'Seed a single-elimination bracket from pool standings' : 'Enabled once every pool has completed all matches';
+}
+
+function generateBracket() {
+  if (!poolsComplete()) return;
+  var qualifiersPerPool = 2;
+  var rankGroups = [];
+
+  Object.keys(POOLS).forEach(function (poolKey) {
+    var sorted = sortedTeams(POOLS[poolKey].teams);
+    for (var r = 0; r < qualifiersPerPool; r++) {
+      if (!rankGroups[r]) rankGroups[r] = [];
+      var t = sorted[r];
+      if (t) rankGroups[r].push({ name: t.name, pool: poolKey, diff: t.pf - t.pa, seedRank: r + 1 });
+    }
+  });
+  rankGroups.forEach(function (g) { g.sort(function (a, b) { return b.diff - a.diff; }); });
+  var seeds = [].concat.apply([], rankGroups);
+
+  var bracketSize = 1;
+  while (bracketSize < seeds.length) bracketSize *= 2;
+  while (seeds.length < bracketSize) seeds.push(null); // BYE
+
+  var round1 = [];
+  for (var i = 0; i < bracketSize / 2; i++) {
+    round1.push([seeds[i], seeds[bracketSize - 1 - i]]);
+  }
+
+  bracket = { seeds: seeds, round1: round1 };
+  setView('bracket');
+}
+
+function roundLabel(distanceFromFinal) {
+  var names = ['Final', 'Semifinal', 'Quarterfinal', 'Round of 16'];
+  return names[distanceFromFinal] || ('Round ' + (distanceFromFinal + 1));
+}
+
+function slotHtml(entrant) {
+  if (!entrant) return '<div class="bracket-node__slot is-tbd">BYE</div>';
+  return '<a href="admin-matches.html" class="bracket-node__slot">' + entrant.name + ' <span class="text-slate-400 font-normal">(P' + entrant.pool + ')</span></a>';
+}
+
+function renderBracketView() {
+  var data = bracket;
+  document.getElementById('bracketEmpty').classList.toggle('hidden', !!data);
+  document.getElementById('bracketTreeWrap').classList.toggle('hidden', !data);
+  if (!data) return;
+
+  var totalRounds = Math.log2(data.round1.length * 2);
+  var roundsHtml = '';
+  var currentMatches = data.round1.length;
+
+  for (var r = 0; r < totalRounds; r++) {
+    var label = roundLabel(totalRounds - 1 - r);
+    var nodes = '';
+    if (r === 0) {
+      data.round1.forEach(function (pair) {
+        nodes += '<div class="bracket-node mb-4">' + slotHtml(pair[0]) + slotHtml(pair[1]) + '</div>';
+      });
+    } else {
+      var count = currentMatches / Math.pow(2, r);
+      for (var m = 0; m < count; m++) {
+        nodes += '<div class="bracket-node mb-4"><div class="bracket-node__slot is-tbd">TBD</div><div class="bracket-node__slot is-tbd">TBD</div></div>';
+      }
+    }
+    roundsHtml += '<div class="bracket-round"><p class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2 text-center">' + label + '</p>' + nodes + '</div>';
+  }
+
+  roundsHtml += '<div class="bracket-round" style="justify-content:flex-start;">' +
+    '<p class="text-xs font-bold uppercase tracking-wide text-slate-400 mb-2 text-center">Medal Match &middot; 3rd Place</p>' +
+    '<div class="bracket-node opacity-70"><div class="bracket-node__slot is-tbd">TBD (SF loser)</div><div class="bracket-node__slot is-tbd">TBD (SF loser)</div></div></div>';
+
+  document.getElementById('bracketTree').innerHTML = roundsHtml;
+}
+
+function renderAll() {
+  renderTabs();
+  renderStandingsTable();
+  renderBracketView();
+}
+
+setView('standings');
+renderAll();
+</script>
+
+</body>
+</html>

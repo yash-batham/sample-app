@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<div class="admin-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar hidden lg:flex" id="adminSidebar">
+    <div class="flex items-center gap-2.5 px-5 py-5">
+      <span class="pb-nav__brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/><circle cx="9" cy="9" r="1.2" fill="white"/><circle cx="15" cy="9" r="1.2" fill="white"/><circle cx="9" cy="15" r="1.2" fill="white"/><circle cx="15" cy="15" r="1.2" fill="white"/><circle cx="12" cy="12" r="1.2" fill="white"/></svg>
+      </span>
+      <div class="leading-tight">
+        <p class="font-display font-bold text-white text-sm">Summer Smash</p>
+        <p class="text-[0.62rem] text-slate-400 uppercase tracking-wider font-bold">Admin Console</p>
+      </div>
+    </div>
+
+    <nav class="flex-1 py-2 space-y-0.5">
+      <a href="admin-dashboard.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </a>
+      <a href="admin-matches.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16" stroke-linecap="round"/></svg>
+        Matches
+      </a>
+      <a href="admin-standings.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M12 19V4M20 19v-7" stroke-linecap="round"/></svg>
+        Pools &amp; Standings
+      </a>
+      <a href="admin-teams.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/><circle cx="17.5" cy="8.5" r="2.3"/><path d="M15.5 14.3c2.9.3 5 2.3 5 5.2"/></svg>
+        Teams
+      </a>
+      <a href="admin-schedule.html" class="admin-sidebar__link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 2v4M16 2v4" stroke-linecap="round"/></svg>
+        Courts &amp; Schedule
+      </a>
+      <a href="admin-settings.html" class="admin-sidebar__link is-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="px-3 py-4 border-t border-white/10">
+      <div class="flex items-center gap-2.5 px-2 mb-3">
+        <span class="avatar" style="width:34px;height:34px;font-size:0.8rem;background:var(--pb-orange-500);">DA</span>
+        <div class="leading-tight">
+          <p class="text-white text-sm font-semibold">Dana Alvarez</p>
+          <p class="text-[0.68rem] text-slate-400">Tournament Director</p>
+        </div>
+      </div>
+      <a href="admin-login.html" class="admin-sidebar__link !px-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" stroke-linecap="round"/><path d="M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Log Out
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="flex-1 min-w-0">
+
+    <div class="admin-topbar">
+      <div class="px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <button class="lg:hidden p-2 -ml-2 text-slate-500" onclick="document.getElementById('adminSidebar').classList.toggle('hidden'); document.getElementById('adminSidebar').classList.toggle('flex');">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+          </button>
+          <div>
+            <h1 class="font-display font-bold text-lg text-slate-800 leading-tight">Settings</h1>
+            <p class="text-xs text-slate-400">Tournament configuration, formats, timeline, and staff</p>
+          </div>
+        </div>
+        <a href="index.html" class="btn btn-outline btn-sm hidden sm:inline-flex">View Public Site</a>
+      </div>
+    </div>
+
+    <main class="p-4 sm:p-6 space-y-6 max-w-5xl">
+
+      <!-- General -->
+      <section class="form-panel">
+        <div class="section-heading !mb-4"><h2 class="font-display font-bold text-base text-slate-800">General</h2></div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="form-field">
+            <label class="form-label">Tournament Name</label>
+            <input type="text" class="form-input" value="Summer Smash Pickleball Championship">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Venue</label>
+            <input type="text" class="form-input" value="Riverside Community Courts, 1200 Riverside Dr">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Event Date</label>
+            <input type="text" class="form-input" value="Saturday, August 16, 2026">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Check-in Opens</label>
+            <input type="text" class="form-input" value="7:30 AM">
+          </div>
+        </div>
+        <div class="form-field mt-4">
+          <label class="form-label">Courts</label>
+          <div class="space-y-2" id="courtsList">
+            <!-- rows injected -->
+          </div>
+          <button class="btn btn-outline btn-sm mt-2" onclick="addCourtRow()">+ Add Court</button>
+        </div>
+      </section>
+
+      <!-- Format -->
+      <section class="form-panel">
+        <div class="section-heading !mb-4">
+          <h2 class="font-display font-bold text-base text-slate-800">Match Format</h2>
+          <span class="badge-chip">Applies tournament-wide</span>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-5">
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+            <p class="text-xs font-bold uppercase tracking-wide text-teal-700 mb-3">Pool Play</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="form-field"><label class="form-label">Target Score</label><input type="number" class="form-input" value="15"></div>
+              <div class="form-field"><label class="form-label">Win By</label><input type="number" class="form-input" value="1"></div>
+              <div class="form-field"><label class="form-label">Games per Match</label><input type="number" class="form-input" value="1"></div>
+              <div class="form-field">
+                <label class="form-label">Scoring</label>
+                <select class="form-select"><option selected>Rally Scoring</option><option>Traditional (Server Only)</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+            <p class="text-xs font-bold uppercase tracking-wide text-orange-600 mb-3">Bracket &amp; Medal Matches</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="form-field"><label class="form-label">Target Score</label><input type="number" class="form-input" value="11"></div>
+              <div class="form-field"><label class="form-label">Win By</label><input type="number" class="form-input" value="2"></div>
+              <div class="form-field"><label class="form-label">Best Of</label><input type="number" class="form-input" value="3"></div>
+              <div class="form-field">
+                <label class="form-label">Scoring</label>
+                <select class="form-select"><option selected>Rally Scoring</option><option>Traditional (Server Only)</option></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 mt-3">Defaults shown are tuned for a 1-day, 6-court event: short pool games keep round robin moving, best-of-3 preserves championship integrity once the field is cut.</p>
+      </section>
+
+      <!-- Day Timeline -->
+      <section class="form-panel">
+        <div class="section-heading !mb-4"><h2 class="font-display font-bold text-base text-slate-800">Day Timeline</h2></div>
+        <div class="space-y-2" id="timelineList"></div>
+        <button class="btn btn-outline btn-sm mt-3" onclick="addTimelineRow()">+ Add Block</button>
+        <p class="text-xs text-slate-400 mt-2">These blocks drive the &ldquo;now&rdquo; marker on the Overview day timeline.</p>
+      </section>
+
+      <!-- Staff -->
+      <section class="form-panel">
+        <div class="section-heading !mb-4">
+          <h2 class="font-display font-bold text-base text-slate-800">Staff &amp; Referees</h2>
+          <button class="btn btn-outline btn-sm">+ Add Staff</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Role</th><th>Assigned Court</th><th>Contact</th><th class="text-right">Actions</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="font-semibold text-slate-800">Dana Alvarez</td>
+                <td><span class="badge-chip">Tournament Director</span></td>
+                <td>All Courts</td>
+                <td class="text-slate-500">dana.alvarez@example.com</td>
+                <td class="text-right"><button class="btn btn-outline btn-sm">Edit</button></td>
+              </tr>
+              <tr>
+                <td class="font-semibold text-slate-800">Marcus Lee</td>
+                <td><span class="badge-chip">Head Referee</span></td>
+                <td>Courts 1&ndash;3</td>
+                <td class="text-slate-500">(555) 201-8834</td>
+                <td class="text-right"><button class="btn btn-outline btn-sm">Edit</button></td>
+              </tr>
+              <tr>
+                <td class="font-semibold text-slate-800">Priya Nair</td>
+                <td><span class="badge-chip">Referee</span></td>
+                <td>Courts 4&ndash;6</td>
+                <td class="text-slate-500">(555) 476-2290</td>
+                <td class="text-right"><button class="btn btn-outline btn-sm">Edit</button></td>
+              </tr>
+              <tr>
+                <td class="font-semibold text-slate-800">Tomás Ibarra</td>
+                <td><span class="badge-chip">Check-in Desk</span></td>
+                <td class="text-slate-400">&ndash;</td>
+                <td class="text-slate-500">(555) 902-1147</td>
+                <td class="text-right"><button class="btn btn-outline btn-sm">Edit</button></td>
+              </tr>
+              <tr>
+                <td class="font-semibold text-slate-800">Wendy Cole</td>
+                <td><span class="badge-chip">Court Marshal</span></td>
+                <td>Floating</td>
+                <td class="text-slate-500">(555) 334-7762</td>
+                <td class="text-right"><button class="btn btn-outline btn-sm">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="flex justify-end gap-2 pb-6">
+        <button class="btn btn-outline">Discard Changes</button>
+        <button class="btn btn-primary">Save Settings</button>
+      </div>
+
+    </main>
+  </div>
+
+</div>
+
+<script>
+var courts = ['Court 1', 'Court 2', 'Court 3', 'Court 4', 'Court 5', 'Court 6'];
+var timeline = [
+  { label: 'Check-in', start: '7:30 AM', end: '8:30 AM' },
+  { label: 'Pool Play', start: '8:30 AM', end: '2:30 PM' },
+  { label: 'Bracket Play', start: '2:30 PM', end: '4:30 PM' },
+  { label: 'Medal Matches', start: '4:30 PM', end: '5:00 PM' }
+];
+
+function renderCourts() {
+  document.getElementById('courtsList').innerHTML = courts.map(function (c, i) {
+    return '<div class="flex items-center gap-2">' +
+      '<input type="text" class="form-input !w-40" value="' + c + '" onchange="courts[' + i + ']=this.value">' +
+      '<button class="btn btn-outline btn-sm !px-2.5" onclick="removeCourt(' + i + ')">&times;</button></div>';
+  }).join('');
+}
+
+function addCourtRow() {
+  courts.push('Court ' + (courts.length + 1));
+  renderCourts();
+}
+
+function removeCourt(i) {
+  courts.splice(i, 1);
+  renderCourts();
+}
+
+function renderTimeline() {
+  document.getElementById('timelineList').innerHTML = timeline.map(function (b, i) {
+    return '<div class="flex items-center gap-2 flex-wrap">' +
+      '<input type="text" class="form-input !w-40" value="' + b.label + '" onchange="timeline[' + i + '].label=this.value">' +
+      '<input type="text" class="form-input !w-28" value="' + b.start + '" onchange="timeline[' + i + '].start=this.value">' +
+      '<span class="text-slate-400 text-sm">&ndash;</span>' +
+      '<input type="text" class="form-input !w-28" value="' + b.end + '" onchange="timeline[' + i + '].end=this.value">' +
+      '<button class="btn btn-outline btn-sm !px-2.5" onclick="removeTimelineRow(' + i + ')">&times;</button></div>';
+  }).join('');
+}
+
+function addTimelineRow() {
+  timeline.push({ label: 'New Block', start: '', end: '' });
+  renderTimeline();
+}
+
+function removeTimelineRow(i) {
+  timeline.splice(i, 1);
+  renderTimeline();
+}
+
+renderCourts();
+renderTimeline();
+</script>
+
+</body>
+</html>

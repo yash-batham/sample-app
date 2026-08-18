@@ -1,0 +1,82 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  ECR_REPOSITORY: pickleball-backend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Read Infra stack outputs
+        id: infra
+        run: |
+          get_output() {
+            aws cloudformation describe-stacks \
+              --stack-name "${{ vars.INFRA_STACK_NAME }}" \
+              --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" \
+              --output text
+          }
+          echo "cloudfront_domain=$(get_output CloudFrontDomainName)" >> "$GITHUB_OUTPUT"
+          echo "distribution_id=$(get_output CloudFrontDistributionId)" >> "$GITHUB_OUTPUT"
+          echo "bucket_name=$(get_output FrontendBucketName)" >> "$GITHUB_OUTPUT"
+
+      # ---------- Backend: build + push image, deploy App stack ----------
+      - name: Login to ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push backend image
+        working-directory: server
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+        run: |
+          docker build -t "$REGISTRY/$ECR_REPOSITORY:${{ github.sha }}" .
+          docker push "$REGISTRY/$ECR_REPOSITORY:${{ github.sha }}"
+
+      - name: Deploy Application stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name "${{ vars.APP_STACK_NAME }}" \
+            --template-file infra/app-template.yaml \
+            --parameter-overrides \
+              InfraStackName="${{ vars.INFRA_STACK_NAME }}" \
+              ImageTag="${{ github.sha }}" \
+            --no-fail-on-empty-changeset
+
+      # ---------- Frontend: build against the CloudFront domain, sync to S3 ----------
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - name: Build frontend
+        working-directory: client
+        env:
+          VITE_API_URL: https://${{ steps.infra.outputs.cloudfront_domain }}
+        run: |
+          npm ci
+          npm run build
+
+      - name: Sync frontend to S3 and invalidate CloudFront
+        run: |
+          aws s3 sync client/dist "s3://${{ steps.infra.outputs.bucket_name }}" --delete
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ steps.infra.outputs.distribution_id }}" \
+            --paths "/*"

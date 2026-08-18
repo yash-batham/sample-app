@@ -1,0 +1,57 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node / Vite / React frontend
+node_modules
+dist
+dist-ssr
+*.local
+.vite
+*.tsbuildinfo
+.eslintcache
+coverage
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+wheels/
+*.egg-info
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv
+
+# Environment variables (never commit real secrets; .env.example stays tracked)
+.env
+.env.*
+!.env.example
+!*/.env.example
+
+# Scratch/local-only output
+server/_tmp_matches.json
+uv.toml
+.npmrc
+.claude
+certificate
